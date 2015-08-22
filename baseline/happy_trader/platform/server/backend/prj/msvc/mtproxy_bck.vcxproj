@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6D769960-0000-0000-0000-000000000000}</ProjectGuid>
+    <RootNamespace>mtproxy_bck</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\..\..\..\lib\win32_i86\Debug\</OutDir>
+    <IntDir>.\../../obj/Debug/mtproxy\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>false</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\..\..\..\lib\win32_i86\Release\</OutDir>
+    <IntDir>.\../../obj/Release/mtproxy\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Debug/mtproxy_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;MTPROXY_BCK_EXPORTS;SERVICE_BACKEND_DLLS;_USE_32BIT_TIME_T;HANDLE_NATIVE_EXCEPTIONS;_SINGLE_LOG_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling />
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Debug/mtproxy/mtproxy_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Debug/mtproxy/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Debug/mtproxy/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Debug/mtproxy/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;netapi32.lib;odbc32.lib;odbccp32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Debug/htmtproxy_bck_d.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)/shared/lib/win32_i86/Debug;$(HT_DEVEL_ROOT)/extern/lib/win32_i86/xerces;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <ModuleDefinitionFile>../../src/mtproxy/mtproxy_bck.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Debug/htmtproxy_bck_d.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Debug/htmtproxy_bck_d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetFileName).embed.manifest</OutputManifestFile>
+    </Manifest>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                      $(OutDir)\htmtproxy_bck_d.dll                ..\..\..\..\..\bin\win32_i86\Debug\htmtproxy_bck_d.dll </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Release/mtproxy_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;MTPROXY_BCK_EXPORTS;SERVICE_BACKEND_DLLS;_USE_32BIT_TIME_T;HANDLE_NATIVE_EXCEPTIONS;_SINGLE_LOG_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling />
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Release/mtproxy/mtproxy_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Release/mtproxy/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Release/mtproxy/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Release/mtproxy/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;netapi32.lib;odbc32.lib;odbccp32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Release/htmtproxy_bck.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)/shared/lib/win32_i86/Release;$(HT_DEVEL_ROOT)/extern/lib/win32_i86/xerces;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>../../src/mtproxy/mtproxy_bck.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Release/htmtproxy_bck.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Release/htmtproxy_bck.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                     $(OutDir)\htmtproxy_bck.dll                ..\..\..\..\..\bin\win32_i86\Release\htmtproxy_bck.dll
+copy                     $(OutDir)\htmtproxy_bck.pdb                ..\..\..\..\..\bin\win32_i86\Release\htmtproxy_bck.pdb
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\mtproxy\mt4\experts\scripts\mtht_export_engine.mq4">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%25HT_DEVEL_ROOT%25\extern\tools\mt_600\mql.exe /mql4 %(FullPath)
+copy ..\..\src\mtproxy\mt4\experts\scripts\%(Filename).ex4 %25HT_DEVEL_ROOT%25\bin\win32_i86\Release\
+copy ..\..\src\mtproxy\mt4\experts\scripts\%(Filename).mq4 %25HT_DEVEL_ROOT%25\bin\win32_i86\Release\</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mtht_export_engine.ex4</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">compile MQ4</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">compile MQ4</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%25HT_DEVEL_ROOT%25\extern\tools\mt_600\mql.exe /mql4 %(FullPath)
+copy ..\..\src\mtproxy\mt4\experts\scripts\%(Filename).ex4 %25HT_DEVEL_ROOT%25\bin\win32_i86\Debug\
+copy ..\..\src\mtproxy\mt4\experts\scripts\%(Filename).mq4 %25HT_DEVEL_ROOT%25\bin\win32_i86\Debug\</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">mtht_export_engine.ex4</Outputs>
+    </CustomBuild>
+    <None Include="..\..\src\mtproxy\mtproxy_bck.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\md5_ht.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\misc_ht.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\msgboxtout.cpp" />
+    <ClCompile Include="..\..\src\mtproxy\bootmanager.cpp" />
+    <ClCompile Include="..\..\src\mtproxy\mtproxycore.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\bootmgr.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\chunk.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\except.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\processmgr.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\refcounted.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\reference.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\rootobj.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\servicethread.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\signature.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\uid.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\value.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\config.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\dllmain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\event.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\filelock.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\log.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\mutex.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\process.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\semaphore.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sharedres.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sysdep.cpp" />
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\thread.cpp" />
+    <ClCompile Include="..\..\src\mtproxy\mtproxymanager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\dataqueue.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\md5_ht.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\misc_ht.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\msgboxtout.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="..\..\src\mtproxy\bootmanager.hpp" />
+    <ClInclude Include="..\..\src\mtproxy\mtproxy.hpp" />
+    <ClInclude Include="..\..\src\mtproxy\mtproxycore.hpp" />
+    <ClInclude Include="..\..\src\mtproxy\mtproxydefs.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\assertdef.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\bootmgr.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\chunk.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\config.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputils.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputilsdefs.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\event.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\except.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\filelock.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\functor.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\langdefs.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\log.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\mutex.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\process.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\processmgr.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\pywrapper.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\refcounted.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\reference.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\rootobj.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\semaphore.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\servicethread.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sharedres.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\signature.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\template.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\thread.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\uid.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\value.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\sysdep.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\system.hpp" />
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\system.hpp" />
+    <ClInclude Include="..\..\src\mtproxy\mtproxymanager.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

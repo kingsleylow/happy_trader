@@ -1,0 +1,216 @@
+#ifndef _BRKLIBRTTEST_HELPER_INCLUDED
+#define _BRKLIBRTTEST_HELPER_INCLUDED
+
+#include "brklibrttestdefs.hpp"
+#include "rtsession.hpp"
+#include "commonstruct.hpp"
+
+
+namespace BrkLib {
+	
+	class RtBroker;
+	
+	// --------------------------
+
+	class TradeEntry {
+		friend class RtBroker;
+	public:
+
+	
+
+		struct PosChangeEntry 
+		{
+			PosChangeEntry():
+				state_m(POS_DUMMY),
+				time_m(-1),
+				volume_m(-1),
+				entryCancelled_m(false),
+				limitPrice_m(-1)
+			{
+				price_m.installPrice_m = -1;
+			}
+
+
+			PosType state_m;
+			double time_m;
+			int volume_m;
+			//CppUtils::String brokerOrderId_m;
+			bool entryCancelled_m;
+			BrkLib::Order order_m;
+		
+			union PriceEntry {
+				double installPrice_m;
+				double executePrice_m;
+			} price_m;
+
+			// limit price for stop limit orders
+			double limitPrice_m;
+
+		
+			CppUtils::String toString() const
+			{
+				CppUtils::String result;
+				result += "state_m=" + BrkLib::posTypeToString(state_m) + ";";
+				result += "time_m=" + CppUtils::getGmtTime(time_m) + ";";
+				result += "price_m=" + CppUtils::simpleFloat2String(price_m.installPrice_m) + ";";
+				result += "volume_m=" + CppUtils::simpleFloat2String(volume_m) + ";";
+				result += "limitPrice_m=" + CppUtils::simpleFloat2String(limitPrice_m) + ";";
+				result += "Order ID=" + order_m.ID_m.toString() + ";";
+				result += "Order type=" + BrkLib::orderTypeBitwise2String(order_m.orderType_m) + ";";
+				result += "Order context=" + order_m.context_m.getDescriptionString() + ";";
+
+
+				return result;	
+			}
+
+		};
+		
+		// ctor
+		TradeEntry(BrkLib::RtSession& rtsession,RtBroker &rtbroker);
+
+		TradeEntry(TradeEntry const& src);
+
+		TradeEntry();
+
+		
+
+		// chnages this entry according new prices
+		void processEntry(double const& bid, double const& ask, double const& curTime);
+
+		void addNewOrder(Order const& order);
+
+		void processCancellation(BrkLib::Order const& order);
+
+		void processCalncellationAllPos(BrkLib::Order const& order);
+
+		CppUtils::String getSymbolContext() const
+		{
+			return provider_m + "(" +symbol_m + ")";
+		}
+			
+		static void initializeNewEntry(
+			CppUtils::Uid const&uid,
+			TradeEntry& entry, 
+			CppUtils::String const& provider, 
+			CppUtils::String const& symbol, 
+			SymbolTradingInfo const& tinfo
+		);
+	
+		
+
+		inline CppUtils::String const& getProvider() const
+		{
+			return provider_m;
+		}
+
+		inline CppUtils::String const& getSymbol() const
+		{
+			return symbol_m;
+		}
+
+		bool isValid() const
+		{
+			return (provider_m.size() >=0 && symbol_m.size() > 0 && ID_m.isValid() && rtbroker_m != NULL && rtsession_m != NULL);
+		}
+
+		
+		inline Price& getPriceData()
+		{
+			return priceData_m;
+		}
+
+		inline Price const& getPriceData() const
+		{
+			return priceData_m;
+		}
+
+		CppUtils::String getPriceExceptionContext()	 const
+		{
+			CppUtils::String result;
+			result += "SYMBOL: [" + getSymbolContext() + "] \n";
+			result += "METAINFO: [" + tinfo_m.toString() + "] \n";
+			result += "PRICE: [" + priceData_m.toString() + "] \n";
+
+
+			return result;
+
+		}
+
+		
+
+		CppUtils::String getPriceExceptionContext(Order const& order)	 const
+		{
+			CppUtils::String result;
+			result += "SYMBOL: [" + getSymbolContext() + "] \n";
+			result += "METAINFO: [" + tinfo_m.toString() + "] \n";
+			result += "PRICE: [" + priceData_m.toString() + "] \n";
+			result += CppUtils::String("ORDER: [") + 
+				"orderType_m="+BrkLib::orderTypeBitwise2String(order.orderType_m) + ";" + 
+				"orPrice_m="+CppUtils::simpleFloat2String(order.orPrice_m) + ";" +
+				"orStopPrice_m="+CppUtils::simpleFloat2String(order.orStopPrice_m) + ";" +
+				"volume_m="+CppUtils::long2String(order.orVolume_m) + ";" +
+			+ "] ";
+
+
+			return result;
+
+		}
+
+		
+
+	private:
+
+		 void processOpenPendingEntries(double const& bid, double const& ask, double const& curTime);
+
+		 void processClosingEntries(double const& bid, double const& ask, double const& curTime);
+
+		 void registerEntryInOpenEntries(PosChangeEntry const& entry);
+
+		// position ID
+		CppUtils::Uid ID_m;
+
+		double resolveOpenEntryExecutePrice();
+
+		double resolveOpenEntryExecuteTime();
+
+		bool isPositionOpened() const;
+
+		bool isPositionClosed() const;
+
+		bool isPositionIsPending() const;
+
+		PosChangeEntry * resolveEntryViaBrokerOrderId(list<PosChangeEntry> & entries, CppUtils::String const& brokerOrderId);
+		
+	private:
+
+		
+		
+		list<PosChangeEntry> openEntries_m;
+
+
+	
+
+		// list keeping only closing entries
+		list<PosChangeEntry> closingEntries_m;
+
+		Price priceData_m;
+
+		CppUtils::String provider_m;
+
+		CppUtils::String symbol_m;
+		
+		SymbolTradingInfo tinfo_m;
+
+		BrkLib::RtSession *rtsession_m;
+
+		RtBroker *rtbroker_m;
+
+	private:
+		
+		
+
+	};
+};
+
+
+#endif

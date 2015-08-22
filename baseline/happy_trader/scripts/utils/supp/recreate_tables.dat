@@ -1,0 +1,60 @@
+:: Set environment
+call user_data.cmd
+call env.cmd
+
+::check env vars
+if NOT DEFINED HT_DEBUG_LEVEL goto :ht_debug_level
+if NOT DEFINED MYSQL_CONNECTION_URL goto :mysql_empty
+if NOT DEFINED JAVA_HOME goto :javahome_empty
+if NOT DEFINED HT_SERVER_DIR goto :htserver_dir_empty
+if NOT DEFINED HT_CLIENT_DEBUG_LEVEL goto :ht_client_debug_level_empty
+if NOT DEFINED WINSTONE_DEBUG_LEVEL goto :winstone_debug_level_empty
+if NOT DEFINED JAVA_MEMORY_PARAM goto :java_memory_param_empty
+
+
+
+echo Initialized JAVA_HOME as %JAVA_HOME%
+
+
+
+:: startup Java server
+cd "%HT_SERVER_DIR%"
+
+"%JAVA_HOME%\bin\java.exe" -classpath "%CLASSPATH%;%JAVA_HOME%/lib/tools.jar" %JAVA_MEMORY_PARAM% com.fin.httrader.HtMain %MYSQL_CONNECTION_URL% %HT_CLIENT_DEBUG_LEVEL% %WINSTONE_DEBUG_LEVEL% recreate_tables
+goto :sucess
+
+:mysql_empty
+echo Invalid enviroment entry: MYSQL_CONNECTION_URL
+pause
+goto :sucess
+
+
+:javahome_empty
+echo Invalid enviroment entry: JAVA_HOME
+pause
+goto :sucess
+
+
+:htserver_dir_empty
+echo Invalid enviroment entry: HT_SERVER_DIR
+pause
+goto :sucess
+
+
+:ht_debug_level
+echo Invalid enviroment entry: HT_DEBUG_LEVEL
+pause
+goto :sucess
+
+
+:ht_client_debug_level_empty
+echo Invalid enviroment entry: HT_CLIENT_DEBUG_LEVEL
+
+
+:winstone_debug_level_empty
+echo Invalid enviroment entry: WINSTONE_DEBUG_LEVEL
+
+:java_memory_param_empty
+echo Invalid enviroment entry: JAVA_MEMORY_PARAM, set up for example like: -Xmx512m
+
+:sucess

@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9694AAD8-9873-47ED-BA3A-C71F08E6BCC7}</ProjectGuid>
+    <RootNamespace>socketutils</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Release\</OutDir>
+    <IntDir>.\../../obj/Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Debug\</OutDir>
+    <IntDir>.\../../obj/Debug\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Release/socketutils.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;SOCKETUTILS_EXPORTS;SOCKETUTILS_DLL;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Release/socketutils.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Release/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>netapi32.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Release/htsocketutils.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Release/htsocketutils.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Release/htsocketutils.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\htsocketutils.dll                   ..\..\..\..\bin\win32_i86\Release\
+copy                $(OutDir)\htsocketutils.pdb                ..\..\..\..\bin\win32_i86\Release\
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Debug/socketutils.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;SOCKETUTILS_EXPORTS;SOCKETUTILS_DLL;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Debug/socketutils.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>netapi32.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Debug/htsocketutils_d.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Debug/htsocketutils_d.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Debug/htsocketutils_d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetFileName).embed.manifest</OutputManifestFile>
+    </Manifest>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\htsocketutils_d.dll                  ..\..\..\..\bin\win32_i86\Debug\
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\CriticalAutoRelease.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\CriticalSectionForProtection.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ErrorHandler.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\FileLog.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericCriticalSection.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericEvent.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericMutex.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericReadWriteLock.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericSemaphore.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericThread.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\LibConfig.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ManagedThread.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\MutexAutoRelease.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\OSManager.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\PeriodicThread.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\RWAutoRelease.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ScreenLog.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\StdAfx.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ThreadPool.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\TraceLog.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitableObject.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitableObjectAutoRelease.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitList.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32CriticalSection.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Event.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Mutex.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32ReadWriteLock.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Semaphore.cpp" />
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Thread.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\AsyncSocket.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\BlockedBuffer.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\Interfaces.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\Socket.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketBase.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketPool.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketPoolSocket.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketThreadManager.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketThreadManagerImp.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\StdAfx.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocket.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsync.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsyncDelegator.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\UDPSocket.cpp" />
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\UDPSocketAsync.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\socketmisc.hpp" />
+    <ClInclude Include="..\..\src\socketutils.hpp" />
+    <ClInclude Include="..\..\src\socketutilsdefs.hpp" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\CriticalAutoRelease.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\CriticalSectionForProtection.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\DebugHeap.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ErrorHandler.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ErrorHandlerMacros.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\FileLog.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericCriticalSection.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericEvent.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericMutex.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericReadWriteLock.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericSemaphore.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericThread.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\KomodiaSettings.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\LibConfig.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ManagedThread.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\MutexAutoRelease.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\OSManager.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\PeriodicThread.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ResourceQueue.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ResourceQueueEvents.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\RWAutoRelease.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ScreenLog.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\StdAfx.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ThreadPool.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\TraceLog.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitableObject.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitableObjectAutoRelease.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitList.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32CriticalSection.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Event.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Mutex.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32ReadWriteLock.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Semaphore.h" />
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Thread.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Array_ptr.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\AsyncSocket.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\BlockedBuffer.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\ErrorRegister.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Interfaces.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Socket.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketBase.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketPool.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketPoolSocket.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketThreadManager.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketThreadManagerImp.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\StdAfx.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocket.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsync.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsyncDelegator.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UDPSocket.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UDPSocketAsync.h" />
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UnixTypes.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

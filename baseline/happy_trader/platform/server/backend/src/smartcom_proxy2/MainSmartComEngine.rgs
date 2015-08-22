@@ -1,0 +1,26 @@
+HKCR
+{
+	smartcom_proxy2.MainSmartComEngine.1 = s 'MainSmartComEngine Class'
+	{
+		CLSID = s '{149C2130-0832-47D4-A0D8-EE141D31C6B9}'
+	}
+	smartcom_proxy2.MainSmartComEngine = s 'MainSmartComEngine Class'
+	{
+		CLSID = s '{149C2130-0832-47D4-A0D8-EE141D31C6B9}'
+		CurVer = s 'smartcom_proxy2.MainSmartComEngine.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {149C2130-0832-47D4-A0D8-EE141D31C6B9} = s 'MainSmartComEngine Class'
+		{
+			ProgID = s 'smartcom_proxy2.MainSmartComEngine.1'
+			VersionIndependentProgID = s 'smartcom_proxy2.MainSmartComEngine'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{42519A4B-1067-4F08-B350-433156AE50D6}'
+		}
+	} 
+}

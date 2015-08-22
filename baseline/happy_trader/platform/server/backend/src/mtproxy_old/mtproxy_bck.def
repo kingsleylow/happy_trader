@@ -1,0 +1,15 @@
+
+EXPORTS
+	initialize
+	deinitialize
+	getPendingCommand
+	getPendingCounterNumber
+	deletePendingCommand
+	pushCommandResult
+	pushSymbolMetaInfo
+	pushPositionMetaInfo
+	setGlobal
+	removeGlobal
+	removeAllGlobals
+	getGlobal
+

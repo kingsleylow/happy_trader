@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<descriptor>
+  <header>
+	<moduleversion>1.2.20</moduleversion>
+	<startparameter>
+	  <allvalues>
+		<parameters>
+		  <param>
+			<key>START_MODE</key>
+			<value>CLEAR</value>
+		  </param>
+		</parameters> 
+	  </allvalues>
+	</startparameter>  
+  </header>
+  <runnable>
+	<classes>
+	  <class>
+		<name is_run="true">
+		  com.fin.httrader.externalapi.custom.Main
+		</name>
+		<parameters>
+			
+		  <param>
+			<key>REQUEST_BARS_HISTORY_AGGR_PERIOD</key>
+			<value>AP_Minute</value>
+		  </param>
+		  
+		  <param>
+			<key>REQUEST_BARS_HISTORY_MULTFACTOR</key>
+			<value>1</value>
+		  </param>
+		  
+		  <param>
+			<key>SMARTCOM_LOGIN</key>
+			<value>ST24104</value>
+		  </param>
+					
+		  <param>
+			<key>SIM_PROFILE</key>
+			<value>smartcom_provider</value>
+		  </param>
+					
+		  <param>
+			<key>SMARTCOM_PASSWORD</key>
+			<value>CUQ4QO</value>
+		  </param>
+
+		  <param>
+			<key>SMARTCOM_HOST</key>
+			<value>95.131.26.246</value>
+		  </param>
+					
+		  <param>
+			<key>SMARTCOM_LOGLEVEL</key>
+			<value>2</value>
+		  </param>
+
+		  <param>
+			<key>SMARTCOM_PORT</key>
+			<value>8090</value>
+		  </param>
+		  
+		  <param>
+			<key>RECONNECT_TIMEOUT</key>
+			<value>30</value>
+		  </param>
+
+		  <param>
+			<key>REQUEST_MY_TRADES_POLL_SEC</key>
+			<value>-1</value>
+		  </param>
+			 
+		  <param>
+			<key>SMARTCOM_PORTFOLIO</key>
+			<value>ST24104-RF-01,ST24104-MS-01</value>
+		  </param>
+
+		  <param>
+			<key>IS_DEBUG_CONFIGURATION</key>
+			<value>false</value>
+		  </param>
+					
+		  <param>
+			<key>SYMBOL_FILE</key>
+			<value>c:\work\German_work\in\symbols.txt</value>
+		  </param>
+
+		  <param>
+			<key>BASE_EXPORT_PATH</key>
+			<value>c:\work\German_work\out\export_smartcom\</value>
+		  </param>
+					
+		  <param>
+			<key>CPP_SERVER_NAME</key>
+			<value>smartcom_NEW_CPPSERVER</value>
+		  </param>
+					
+		  <param>
+			<key>CPP_SERVER_PORT</key>
+			<value>8089</value>
+		  </param>
+					
+		  <param>
+			<key>RT_PROVIDER</key>
+			<value>smartcom_provider_2</value>
+		  </param>
+					
+		  <param>
+			<key>HST_PROVIDER</key>
+			<value>smartcom_provider_2_history</value>
+		  </param>
+					
+		  <param>
+			<key>RT_PROVIDER_BAR_POSTFIX</key>
+			<value>_bar</value>
+		  </param>
+					
+		  <param>
+			<key>EVENT_PLUGIN_NAME</key>
+			<value>smartcom_2_event_plugin</value>
+		  </param>
+					
+		  <param>
+			<key>SMARTCOM_ALG_BRK_PAIR</key>
+			<value>smartcom_pair_trade_2</value>
+		  </param>
+					
+		  <param>
+			<key>HISTORY_DATA_PROFILE</key>
+			<value>smartcom_dataprf_2</value>
+		  </param>
+					
+		  <param>
+			<key>HST_PROVIDER_CLASS</key>
+			<value>com.fin.httrader.hstproviders.RtSmartComHistoryProvider</value>
+		  </param>
+					
+		  <param>
+			<key>EVENT_PLUGIN_CLASS</key>
+			<value>com.fin.httrader.eventplugins.HtSmartComLoader</value>
+		  </param>
+					
+		  <param>
+			<key>RT_PROVIDER_CLASS</key>
+			<value>com.fin.httrader.rtproviders.RtSmartComProvider</value>
+		  </param>
+					
+		  <param>
+			<key>BROKER_SEQ_NUM</key>
+			<value>1</value>
+		  </param>
+					
+		  <param>
+			<key>ALG_DLL</key>
+			<value>htpair_trade_bck</value>
+		  </param>
+					
+		  <param>
+			<key>BRK1_DLL</key>
+			<value>htsmartcombrokerprovider_bck</value>
+		  </param>
+					
+		  <param>
+			<key>BRK2_DLL</key>
+			<value>htbrklibrttest_bck</value>
+		  </param>
+
+		  <param>
+			<key>ALG_LIB_PARAMS</key>
+			<value>
+			  <map>
+				
+								
+				<entry>
+				  <key>HISTORY_DATA_PROFILE</key>
+				  <value>smartcom_dataprf_2</value>
+				</entry>
+				
+				<entry>
+				  <key>RT_PROVIDER_SMARTCOM</key>
+				  <value>smartcom_provider_2</value>
+				</entry>
+				
+				<entry>
+				  <key>RT_PROVIDER_BAR_SMARTCOM</key>
+				  <value>smartcom_provider_2_bar</value>
+				</entry>
+
+				<entry>
+				  <key>RT_PROVIDER_BAR_FINAM</key>
+				  <value>finam_provider_bar</value>
+				</entry>
+				
+				<entry>
+				  <key>BASE_EXPORT_PATH</key>
+				  <value>c:\work\German_work\out\export_smartcom\</value>
+				</entry>
+				
+				<entry>
+				  <key>SYMBOL_FILE_SMARTCOM</key>
+				  <value>c:\work\German_work\in\symbols.txt</value>
+				</entry>
+
+				<entry>
+				  <key>SYMBOL_FILE_FINAM</key>
+				  <value>c:\work\German_work\in\symbols_finam.txt</value>
+				</entry>
+				
+				
+				<entry>
+				  <key>TRADE_VOLUME</key>
+				  <value>1</value>
+				</entry>
+				
+				
+				<entry>
+				  <key>IS_DEMO_TRADE</key>
+				  <value>false</value>
+				</entry>
+				
+				<entry>
+				  <key>TRADE_PERIOD_MINUTES</key>
+				  <value>1</value>
+				</entry>
+				
+				<entry>
+				  <key>MA_SLOW_PERIOD</key>
+				  <value>5</value>
+				</entry>
+
+				<entry>
+				  <key>MA_FAST_PERIOD</key>
+				  <value>5</value>
+				</entry>
+
+				<entry>
+				  <key>SYMBOL_SYNTH_FILE_SMARTCOM</key>
+				  <value>c:\work\German_work\in\symbols_synthetic.txt</value>
+				</entry>
+				
+				<entry>
+				  <key>BROKER_TIMEOUT_SEC</key>
+				  <value>10</value>
+				</entry>
+
+			  </map>	
+			</value>
+		  </param>	
+
+		</parameters>
+	  </class>
+	</classes>
+  </runnable>
+</descriptor>

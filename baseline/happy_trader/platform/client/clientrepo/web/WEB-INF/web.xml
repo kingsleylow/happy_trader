@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5" 
+         xmlns="http://java.sun.com/xml/ns/javaee" 
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd
+">
+    <display-name>Happy Trader Client</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml /WEB-INF/securityContext.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/log4j.xml</param-value>
+    </context-param>
+    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <!--
+        <url-pattern>*.html</url-pattern>
+        -->
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+    
+    <!--
+    <servlet>
+        <servlet-name>user-webservice</servlet-name>
+        <servlet-class>com.mtrunner.client.servlets.SendMessageServlet_old</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user-webservice</servlet-name>
+        <url-pattern>/user-webservice</url-pattern>
+    </servlet-mapping>
+    -->
+    
+    <!-- oter resources -->
+    <servlet>
+        <servlet-name>resource-dispatcher</servlet-name>
+        <servlet-class>com.mtrunner.client.servlets.ResourceDispatcherServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>resource-dispatcher</servlet-name>
+        <url-pattern>/resources/*</url-pattern>
+    </servlet-mapping>
+    <!-- Happy trader -->
+    <servlet>
+        <servlet-name>happytrader-gate</servlet-name>
+        <servlet-class>com.mtrunner.client.servlets.HappyTraderGateServlet</servlet-class>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>happytrader-gate</servlet-name>
+        <url-pattern>/htgate/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Happy trader proxy - add user name/password-->
+    <servlet>
+        <servlet-name>happytrader-proxy-gate</servlet-name>
+        <servlet-class>com.mtrunner.client.servlets.HappyTraderProxyGateServlet</servlet-class>
+        <load-on-startup>5</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>happytrader-proxy-gate</servlet-name>
+        <url-pattern>/htproxygate/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- spring security -->
+    <!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+ 
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

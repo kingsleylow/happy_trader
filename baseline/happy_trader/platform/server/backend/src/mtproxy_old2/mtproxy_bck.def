@@ -1,0 +1,16 @@
+
+EXPORTS
+	getVersion
+	init
+	deinit
+	connectToPipeServer
+	disconnectFromPipeServer
+	pushDataToPipeServer
+	getTerminalUid
+	getPollingQueueNextItem
+	getPollingQueueNextItem2
+	getQueueSize
+	isConnectedToPipeServer
+	getConnectAttemptNumber
+	callConnectForm
+	

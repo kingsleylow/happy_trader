@@ -1,0 +1,14 @@
+
+EXPORTS
+	setLoglevel
+	initEnv
+	setEnvParams
+	btc_getInfo
+	btc_generalCall
+	freeEnv
+	freeResponse
+	respGetError
+	respStartMessageRead
+	respReadMessage
+	makeScreenShot
+	

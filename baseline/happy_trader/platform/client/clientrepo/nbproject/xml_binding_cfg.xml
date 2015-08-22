@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='clientrepo' version='1.0'>
+	<schema type='-xmlschema' package='com.mtrunner.client.jaxb.ht_settings' name='hd_settings'>
+		<xjc-options>
+			<xjc-option name='-extension' value='true'/>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='src/conf/xml-resources/jaxb/hd_settings/ht_settings.xsd' origLocation='../../server/backend/src/alglibmetatrader2/xsd/ht_settings.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+</schemas>

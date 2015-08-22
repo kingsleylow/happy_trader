@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Xmx900m -classpath %classpath com.fin.httrader.HtMain jdbc:mysql://127.0.0.1:3306/htrader?user=root&amp;password=admin&amp;characterEncoding=UTF-8 FINE FULL_DEBUG</exec.args>
+                <exec.executable>java</exec.executable>
+                <exec.workingdir></exec.workingdir>
+            </properties>
+        </action>
+        <action>
+            <actionName>debug</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Xmx900m -classpath %classpath com.fin.httrader.HtMain jdbc:mysql://127.0.0.1:3306/htrader?user=root&amp;password=admin&amp;characterEncoding=UTF-8 FINE FULL_DEBUG</exec.args>
+                <exec.executable>java</exec.executable>
+                <jpda.listen>true</jpda.listen>
+                <exec.workingdir></exec.workingdir>
+            </properties>
+        </action>
+        <action>
+            <actionName>profile</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Xmx900m -classpath %classpath com.fin.httrader.HtMain jdbc:mysql://127.0.0.1:3306/htrader?user=root&amp;password=admin&amp;characterEncoding=UTF-8 FINE FULL_DEBUG</exec.args>
+                <exec.executable>java</exec.executable>
+                <exec.workingdir></exec.workingdir>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-My.Surefire.Report</actionName>
+            <displayName>My.Surefire.Report</displayName>
+            <goals>
+                <goal>surefire-report:report-only</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-antrun:run</actionName>
+            <displayName>antrun:run</displayName>
+            <goals>
+                <goal>antrun:run</goal>
+            </goals>
+        </action>
+    </actions>

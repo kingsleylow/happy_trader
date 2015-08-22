@@ -1,0 +1,1517 @@
+
+#include "helper.hpp"
+#include "rtbroker.hpp"
+
+namespace BrkLib {
+
+	TradeEntry::TradeEntry():
+rtsession_m(NULL),
+rtbroker_m(NULL)
+{
+}
+
+TradeEntry::TradeEntry(BrkLib::RtSession& rtsession,RtBroker &rtbroker):
+rtsession_m(&rtsession),
+rtbroker_m(&rtbroker)
+{
+
+};
+
+TradeEntry::TradeEntry(TradeEntry const& src):
+rtsession_m(src.rtsession_m),
+rtbroker_m(src.rtbroker_m),
+provider_m(src.provider_m),
+symbol_m(src.symbol_m),
+tinfo_m(src.tinfo_m),
+priceData_m(src.priceData_m),
+openEntries_m(src.openEntries_m),		
+closingEntries_m(src.closingEntries_m)
+{
+
+}
+
+																																				 
+void TradeEntry::processEntry(double const& bid, double const& ask, double const& curTime)
+{
+	priceData_m.create(bid, ask, curTime);
+	HTASSERT(priceData_m.isValid());
+
+
+	
+	processOpenPendingEntries(bid, ask, curTime);
+	processClosingEntries(bid, ask, curTime);
+	
+
+}
+
+
+void TradeEntry::processOpenPendingEntries(double const& bid, double const& ask, double const& curTime)
+{
+	 if (!isPositionIsPending()) 
+		 return;
+
+
+		// process open entries
+
+		// if lyfecycle is empty - nothing have to be done
+		PosChangeEntry &last_change = openEntries_m.back();
+		//LOG(MSG_INFO, "TradeEntry::processOpenPendingEntries(...)", "Last change found, order: " << BrkLib::getOrderSmallDescription(last_change.order_m));
+		
+		
+		if (last_change.entryCancelled_m)
+			return;
+
+		
+
+		if (last_change.state_m == POS_BUY) {
+			// N/A
+		}
+		else if (last_change.state_m == POS_SELL) {
+			// N/A
+		}
+		else if (last_change.state_m == POS_LIMIT_BUY) {
+			
+			// when we can buy - we do it by best price
+			if (ask <= last_change.price_m.installPrice_m ) {
+
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = ask;
+				exec_entry.state_m = POS_BUY;
+				exec_entry.volume_m = last_change.volume_m;
+
+				
+				registerEntryInOpenEntries(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_BUY,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					provider_m,
+					symbol_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+		}
+		else if (last_change.state_m == POS_LIMIT_SELL) {
+				// when we can sell - we do it by best price
+			if (bid >= last_change.price_m.installPrice_m ) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = bid;
+				exec_entry.state_m = POS_SELL;
+				exec_entry.volume_m = last_change.volume_m;
+
+				registerEntryInOpenEntries(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_SELL,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+		}
+		else if (last_change.state_m == POS_STOP_SELL) {
+			if (bid <= last_change.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = bid - tinfo_m.slippage_m;
+				exec_entry.state_m = POS_SELL;
+				exec_entry.volume_m = last_change.volume_m;
+
+				registerEntryInOpenEntries(exec_entry);
+
+				
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_SELL,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+		}
+		else if (last_change.state_m == POS_STOP_BUY) {
+			if (ask >= last_change.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = ask + tinfo_m.slippage_m;
+				exec_entry.state_m = POS_BUY;
+				exec_entry.volume_m = last_change.volume_m;
+
+				registerEntryInOpenEntries(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_BUY,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+		}
+		else if (last_change.state_m == POS_STOP_LIMIT_BUY) {
+			// if stop is reached - it becomes a limit order
+			if (ask >= last_change.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				// limit price left
+				exec_entry.price_m.installPrice_m = last_change.limitPrice_m;
+				exec_entry.state_m = POS_LIMIT_BUY;
+				exec_entry.volume_m = last_change.volume_m;
+
+				registerEntryInOpenEntries(exec_entry);
+
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.installPrice_m,
+					-1,	 // stop is executed - just limit left
+					OP_BUY_LIMIT,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_INSTALLED,
+					symbol_m,
+					provider_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+
+		}
+		else if (last_change.state_m == POS_STOP_LIMIT_SELL) {
+			if (bid <= last_change.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.installPrice_m = last_change.limitPrice_m;
+				exec_entry.state_m = POS_LIMIT_SELL;
+				exec_entry.volume_m = last_change.volume_m;
+
+				registerEntryInOpenEntries(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.installPrice_m,
+					-1,	// stop is executed - limit left
+					OP_SELL_LIMIT,
+					exec_entry.time_m,
+					last_change.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_INSTALLED,
+					symbol_m,
+					provider_m,
+					last_change.order_m,
+					NULL
+				);
+			}
+		}
+	
+
+}
+
+void TradeEntry::processClosingEntries(double const& bid, double const& ask, double const& curTime)
+{
+	if (isPositionClosed())
+		return;
+
+	// process close entries
+	//list<PosChangeEntry> closingEntries = closingEntries_m;
+
+	int i  =0;
+	for(list<PosChangeEntry>::iterator ig = closingEntries_m.begin(); ig != closingEntries_m.end(); ig++) {
+
+		PosChangeEntry& closeEntry = *ig;
+
+		LOG(MSG_INFO, "TradeEntry::processClosingEntries(...)", "while procesing closing entries: " << i++ << " - "<< closeEntry.toString());
+		
+		if (closeEntry.entryCancelled_m)
+			continue;
+
+		if (closeEntry.state_m == POS_CLOSE_LONG) {
+			// N/A
+
+		}
+		else if (closeEntry.state_m == POS_CLOSE_SHORT) {
+			// N/A
+		}
+		else if (closeEntry.state_m == POS_CLOSE_LIMIT_LONG) {
+
+			// this is limit order to close...
+			if (bid >= closeEntry.price_m.installPrice_m ) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = tinfo_m.executePosExactPrices_m ? closeEntry.price_m.installPrice_m : bid;
+				exec_entry.state_m = BrkLib::POS_CLOSE_LONG;
+				
+
+				closingEntries_m.push_back(exec_entry);
+
+				//LOG(MSG_INFO, "FOO", "Sending response using close entry: " << closeEntry.toString() );
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_CLOSE_LONG,
+					exec_entry.time_m,
+					exec_entry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL
+				);
+
+				// notify that we have closed pos
+				rtbroker_m->sendResponseClosePos(
+					*rtsession_m,
+					exec_entry.time_m,
+					symbol_m,
+					provider_m,
+					TD_LONG,
+					resolveOpenEntryExecutePrice(), 
+					exec_entry.price_m.executePrice_m,
+					exec_entry.volume_m,
+					ID_m.toString(),
+					resolveOpenEntryExecuteTime(),
+					exec_entry.time_m, // close time
+					tinfo_m
+				);
+
+				
+
+			}
+
+		}
+		else if (closeEntry.state_m == POS_CLOSE_LIMIT_SHORT) {
+			if (ask <= closeEntry.price_m.installPrice_m ) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = tinfo_m.executePosExactPrices_m ? closeEntry.price_m.installPrice_m : ask;
+				exec_entry.state_m = BrkLib::POS_CLOSE_SHORT;
+
+				closingEntries_m.push_back(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_CLOSE_SHORT,
+					exec_entry.time_m,
+					exec_entry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL
+				);
+
+				// notify that we have closed pos
+				rtbroker_m->sendResponseClosePos(
+					*rtsession_m,
+					exec_entry.time_m,
+					symbol_m,
+					provider_m,
+					TD_SHORT,
+					resolveOpenEntryExecutePrice(), 
+					exec_entry.price_m.executePrice_m,
+					exec_entry.volume_m,
+					ID_m.toString(),
+					resolveOpenEntryExecuteTime(),
+					exec_entry.time_m, // close time
+					tinfo_m
+				);
+
+			}
+		}
+		else if (closeEntry.state_m == POS_CLOSE_STOP_LONG) {
+			if (bid <= closeEntry.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = tinfo_m.executePosExactPrices_m ? closeEntry.price_m.installPrice_m : bid;
+				exec_entry.state_m = POS_CLOSE_LONG;
+
+				closingEntries_m.push_back(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_CLOSE_LONG,
+					exec_entry.time_m,
+					exec_entry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL
+				);
+
+				rtbroker_m->sendResponseClosePos(
+					*rtsession_m,
+					exec_entry.time_m,
+					symbol_m,
+					provider_m,
+					TD_LONG,
+					resolveOpenEntryExecutePrice(), 
+					exec_entry.price_m.executePrice_m,
+					exec_entry.volume_m,
+					ID_m.toString(),
+					resolveOpenEntryExecuteTime(),
+					exec_entry.time_m, // close time
+					tinfo_m
+				);
+			}
+		}
+		else if (closeEntry.state_m == POS_CLOSE_STOP_SHORT) {
+			if (ask >= closeEntry.price_m.installPrice_m) {
+				PosChangeEntry exec_entry;
+				exec_entry.time_m = curTime;
+				exec_entry.price_m.executePrice_m = tinfo_m.executePosExactPrices_m ? closeEntry.price_m.installPrice_m : ask;
+				exec_entry.state_m = POS_CLOSE_LONG;
+										  
+				closingEntries_m.push_back(exec_entry);
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					exec_entry.price_m.executePrice_m,
+					-1,
+					OP_CLOSE_SHORT,
+					exec_entry.time_m,
+					exec_entry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_EXECUTED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL
+				);
+
+				rtbroker_m->sendResponseClosePos(
+					*rtsession_m,
+					exec_entry.time_m,
+					symbol_m,
+					provider_m,
+					TD_SHORT,
+					resolveOpenEntryExecutePrice(), 
+					exec_entry.price_m.executePrice_m,
+					exec_entry.volume_m,
+					ID_m.toString(),
+					resolveOpenEntryExecuteTime(),
+					exec_entry.time_m, // close time
+					tinfo_m
+				);
+
+				// 
+			}
+		}
+		else if (closeEntry.state_m == POS_CLOSE_STOP_LIMIT_LONG) {
+			if (bid <= closeEntry.price_m.installPrice_m) {
+				// that case we must change current entry!
+
+				//PosChangeEntry exec_entry;
+				//exec_entry.time_m = curTime;
+				//exec_entry.price_m.installPrice_m = closeEntry.price_m.installPrice_m;
+				//exec_entry.state_m = POS_CLOSE_LIMIT_LONG;
+
+				//closingEntries_m.push_back(exec_entry);
+
+				closeEntry.time_m = curTime;
+				closeEntry.state_m = POS_CLOSE_LIMIT_LONG;
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					closeEntry.price_m.installPrice_m,
+					-1,	 // stop is executed limit left
+					OP_CLOSE_LONG_LIMIT,
+					closeEntry.time_m,
+					closeEntry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_INSTALLED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL,
+					"STOP LIMIT LONG -> LIMIT LONG"
+				);
+			}
+		}
+		else if (closeEntry.state_m == POS_CLOSE_STOP_LIMIT_SHORT) {
+			if (ask >= closeEntry.price_m.installPrice_m) {
+				// that case we must change current entry
+				//PosChangeEntry exec_entry;
+				//exec_entry.time_m = curTime;
+				//exec_entry.price_m.installPrice_m = closeEntry.price_m.installPrice_m;
+				//exec_entry.state_m = POS_CLOSE_LIMIT_SHORT;
+
+				//closingEntries_m.push_back(exec_entry);
+				closeEntry.time_m = curTime;
+				closeEntry.state_m = POS_CLOSE_LIMIT_SHORT;
+
+				rtbroker_m->sendResponseOnPendingOperation(
+					*rtsession_m,
+					ID_m.toString(),
+					closeEntry.price_m.installPrice_m,
+					-1, // stop is executed limit left
+					OP_CLOSE_SHORT_LIMIT,
+					closeEntry.time_m,
+					closeEntry.volume_m,
+					PT_ORDER_ESTABLISHED,
+					ODR_ORDER_INSTALLED,
+					symbol_m,
+					provider_m,
+					closeEntry.order_m,
+					NULL,
+					"STOP LIMIT SHORT -> LIMIT SHORT"
+				);
+			}
+		}
+
+
+	}
+}
+
+
+
+void TradeEntry::addNewOrder(Order const& order)
+{
+
+	if (!priceData_m.isValid())
+		THROW(CppUtils::OperationFailed, "exc_PriceDataInvalid", "ctx_addNewOrder",getPriceExceptionContext());
+
+	// this adds order to already initialized entry
+	if (order.orderType_m & BrkLib::OP_BUY) {
+		// immedaitely execute
+		PosChangeEntry entry;
+		entry.volume_m = order.orVolume_m;
+		entry.time_m = priceData_m.time_m;
+		entry.price_m.executePrice_m = priceData_m.ask_m + tinfo_m.slippage_m;
+		entry.state_m = POS_BUY;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_Buy",getPriceExceptionContext(order));
+
+		registerEntryInOpenEntries(entry);
+
+
+		
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_BUY,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_BUY,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_EXECUTED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_SELL) {
+		// this is expected to be clear entry
+
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.executePrice_m = priceData_m.bid_m - tinfo_m.slippage_m;
+		entry.state_m = POS_SELL;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_Sell",getPriceExceptionContext(order));
+
+		registerEntryInOpenEntries(entry);
+
+	
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_SELL,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_SELL,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_EXECUTED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_BUY_LIMIT) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orPrice_m;
+		entry.state_m = BrkLib::POS_LIMIT_BUY;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_BuyLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_BuyLimit",getPriceExceptionContext(order));
+
+		// can install any price
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.installPrice_m,
+			-1,
+			OP_BUY_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_SELL_LIMIT) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orPrice_m;
+		entry.state_m = BrkLib::POS_LIMIT_SELL;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_SellLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_SellLimit",getPriceExceptionContext(order));
+
+		// can install any price
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.installPrice_m,
+			-1,
+			OP_SELL_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_BUY_STOP) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		entry.state_m = BrkLib::POS_STOP_BUY;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_BuyStop",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_BuyStop",getPriceExceptionContext(order));
+
+		
+
+		// stop price cannot be better than current
+		if ((order.orStopPrice_m - priceData_m.ask_m ) < tinfo_m.minStopOrderDistance_m) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_BuyStop",getPriceExceptionContext(order));
+		} 
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			-1,
+			entry.price_m.installPrice_m,
+			OP_BUY_STOP,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+	}
+	else if (order.orderType_m & BrkLib::OP_SELL_STOP) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		entry.state_m = BrkLib::POS_STOP_SELL;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_SellStop",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_SellStop",getPriceExceptionContext(order));
+
+		// stop price cannot be better than current
+		if ((priceData_m.bid_m - order.orStopPrice_m ) < tinfo_m.minStopOrderDistance_m) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_SellStop",getPriceExceptionContext(order));
+		}	
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			-1,
+			entry.price_m.installPrice_m,
+			OP_SELL_STOP,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+	}
+	else if (order.orderType_m & BrkLib::OP_BUY_STOP_LIMIT) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orStopPrice_m; // this is expected to be stop price
+		entry.limitPrice_m = order.orPrice_m;
+		entry.state_m = BrkLib::POS_STOP_LIMIT_BUY;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_BuyStopLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_BuyStopLimit",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_BuyStopLimit",getPriceExceptionContext(order));
+
+		// initially this is stop order
+		if ((order.orStopPrice_m - priceData_m.ask_m ) < tinfo_m.minStopOrderDistance_m) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_BuyStopLimit",getPriceExceptionContext(order));
+		} 
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			order.orPrice_m ,
+			order.orStopPrice_m,
+			OP_BUY_STOP_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+	}
+	else if (order.orderType_m & BrkLib::OP_SELL_STOP_LIMIT) {
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		entry.limitPrice_m = order.orPrice_m;
+		entry.state_m = BrkLib::POS_STOP_LIMIT_SELL;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_SellStopLimit",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_SellStopLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_SellStopLimit",getPriceExceptionContext(order));
+
+		// stop price cannot be better than current
+		if ((priceData_m.bid_m - order.orStopPrice_m ) < tinfo_m.minStopOrderDistance_m) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_SellStopLimit",getPriceExceptionContext(order));
+		}	
+
+		registerEntryInOpenEntries(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			order.orPrice_m ,
+			order.orStopPrice_m,
+			OP_SELL_STOP_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+	}
+
+	else if (order.orderType_m & BrkLib::OP_CLOSE_LONG) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_BUY)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenBuy", "ctx_CloselLong", last_change.toString());
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloselLong",getPriceExceptionContext(order));
+
+		//int imbalance = last_change.volume_m - order.orVolume_m;
+
+
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.executePrice_m = priceData_m.bid_m - tinfo_m.slippage_m;
+		entry.state_m = POS_CLOSE_LONG;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+
+		closingEntries_m.push_back(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_CLOSE_LONG,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_CLOSE_LONG,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_EXECUTED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		// notify that we have closed pos
+		rtbroker_m->sendResponseClosePos(
+			*rtsession_m,
+			entry.time_m,
+			symbol_m,
+			provider_m,
+			TD_LONG,
+			resolveOpenEntryExecutePrice(),
+			entry.price_m.executePrice_m,
+			entry.volume_m,
+			ID_m.toString(),
+			resolveOpenEntryExecuteTime(),
+			entry.time_m, // close time
+			tinfo_m
+		);
+			 
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_SHORT) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_SELL)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenSell", "ctx_CloselShort",last_change.toString());
+
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloselShort",getPriceExceptionContext(order));
+
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.price_m.executePrice_m = priceData_m.ask_m + tinfo_m.slippage_m;
+		entry.state_m = POS_CLOSE_SHORT;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+
+		closingEntries_m.push_back(entry);
+
+		// notify install then execute
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_CLOSE_SHORT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.executePrice_m,
+			-1,
+			OP_CLOSE_SHORT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_EXECUTED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+		// notify that we have closed pos
+		rtbroker_m->sendResponseClosePos(
+			*rtsession_m,
+			entry.time_m,
+			symbol_m,
+			provider_m,
+			TD_SHORT,
+			resolveOpenEntryExecutePrice(),
+			entry.price_m.executePrice_m,
+			entry.volume_m,
+			ID_m.toString(),
+			resolveOpenEntryExecuteTime(),
+			entry.time_m, // close time
+			tinfo_m
+		);
+
+		
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_LONG_LIMIT) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_BUY)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenBuy", "ctx_CloseLongLimit",last_change.toString());
+
+		// 
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_LIMIT_LONG;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseLongLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_CloseLongLimit",getPriceExceptionContext(order));
+
+		if ((order.orPrice_m - priceData_m.bid_m) < (tinfo_m.minLimitOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_CloseLongLimit",getPriceExceptionContext(order));
+		}
+
+		entry.price_m.installPrice_m = order.orPrice_m;
+		closingEntries_m.push_back(entry);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.installPrice_m,
+			-1,
+			OP_CLOSE_LONG_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_SHORT_LIMIT) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_SELL)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenSell", "ctx_CloseShortLimit",last_change.toString());
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_LIMIT_SHORT;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseShortLimit",getPriceExceptionContext(order));
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_CloseShortLimit",getPriceExceptionContext(order));
+
+		if ((priceData_m.ask_m - order.orPrice_m) < (tinfo_m.minLimitOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_CloseShortLimit",getPriceExceptionContext(order));
+		}
+
+		entry.price_m.installPrice_m = order.orPrice_m;
+		closingEntries_m.push_back(entry);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			entry.price_m.installPrice_m,
+			-1,
+			OP_CLOSE_SHORT_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+	}
+
+	else if (order.orderType_m & BrkLib::OP_CLOSE_LONG_STOP) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_BUY)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenBuy", "ctx_CloseLongStop",last_change.toString());
+
+		// immediate execution							    
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_STOP_LONG;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseLongStop",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_CloseLongStop",getPriceExceptionContext(order));
+
+		if ((priceData_m.bid_m - order.orStopPrice_m ) < (tinfo_m.minStopOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidStopPrice", "ctx_CloseLongStop",getPriceExceptionContext(order));
+		}	
+
+
+
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		closingEntries_m.push_back(entry);
+
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			-1,
+			order.orStopPrice_m,
+			OP_CLOSE_LONG_STOP,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_SHORT_STOP) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_SELL)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenSell", "ctx_CloseShortStop",getPriceExceptionContext(order));
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_STOP_SHORT;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseShortStop",getPriceExceptionContext(order));
+
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_CloseShortStop",getPriceExceptionContext(order));
+
+		if ((order.orStopPrice_m - priceData_m.ask_m ) < (tinfo_m.minStopOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidStopPrice", "ctx_CloseShortStop",getPriceExceptionContext(order));
+		} 
+
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		closingEntries_m.push_back(entry);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			-1,
+			order.orStopPrice_m,
+			OP_CLOSE_SHORT_STOP,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_LONG_STOP_LIMIT) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_BUY)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenBuy", "ctx_CloseLongStopLimit",last_change.toString());
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_STOP_LIMIT_LONG;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseLongStopLimit",getPriceExceptionContext(order));
+
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_CloseLongStopLimit",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_CloseLongStopLimit",getPriceExceptionContext());
+
+		if ((priceData_m.bid_m - order.orStopPrice_m ) < (tinfo_m.minStopOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_CloseLongStopLimit",getPriceExceptionContext(order));
+		}	
+
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		closingEntries_m.push_back(entry);
+
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			order.orPrice_m,
+			order.orStopPrice_m,
+			OP_CLOSE_LONG_STOP_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+		);
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_CLOSE_SHORT_STOP_LIMIT) {
+
+		HTASSERT(openEntries_m.size() > 0);
+		PosChangeEntry const& last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_SELL)
+			THROW(CppUtils::OperationFailed, "exc_PositionMustBeOpenSell", "ctx_CloseShortStopLimit",last_change.toString());
+
+		// immediate execution
+		PosChangeEntry entry;
+		entry.time_m = priceData_m.time_m;
+		entry.volume_m = order.orVolume_m;
+		entry.state_m = POS_CLOSE_STOP_LIMIT_SHORT;
+		entry.order_m = order;
+		//entry.brokerOrderId_m = order.ID_m.toString();
+
+		if (order.orVolume_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_VolumeLessZero", "ctx_CloseShortStopLimit",getPriceExceptionContext(order));
+
+
+		if (order.orPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_PriceLessZero", "ctx_CloseShortStopLimit",getPriceExceptionContext(order));
+
+		if (order.orStopPrice_m <=0)
+			THROW(CppUtils::OperationFailed, "exc_StopPriceLessZero", "ctx_CloseLongStopLimit",getPriceExceptionContext(order));
+
+		if ((order.orStopPrice_m - priceData_m.ask_m ) < (tinfo_m.minStopOrderDistance_m+tinfo_m.slippage_m)) {
+			THROW(CppUtils::OperationFailed, "exc_InvalidPrice", "ctx_CloseShortStopLimit",getPriceExceptionContext(order));
+		} 
+
+		entry.price_m.installPrice_m = order.orStopPrice_m;
+		closingEntries_m.push_back(entry);
+
+		rtbroker_m->sendResponseOnPendingOperation(
+			*rtsession_m,
+			ID_m.toString(),
+			order.orPrice_m,
+			order.orStopPrice_m,
+			OP_CLOSE_SHORT_STOP_LIMIT,
+			entry.time_m,
+			entry.volume_m,
+			PT_ORDER_ESTABLISHED,
+			ODR_ORDER_INSTALLED,
+			symbol_m,
+			provider_m,
+			order,
+			NULL
+	 	);
+
+
+
+	}
+	else if (order.orderType_m & BrkLib::OP_ORDER_CANCEL) {
+		// this must cancel everything
+		if (order.brokerOrderID_m.size() > 0)
+			processCancellation(order);
+		else
+			processCalncellationAllPos(order);
+
+	}
+	else
+		THROW(CppUtils::OperationFailed, "exc_InvalidOrderType", "ctx_addNewOrder", order.ID_m.toString());
+
+
+}
+
+double TradeEntry::resolveOpenEntryExecutePrice()
+{
+	if (!isPositionOpened())			  
+		THROW(CppUtils::OperationFailed, "exc_EntryIsNotExecuted", "ctx_ResolveOpenEntryPrice", ID_m.toString())
+
+	double price = openEntries_m.back().price_m.executePrice_m;
+	if (price <=0)
+		THROW(CppUtils::OperationFailed, "exc_InvalidOpenEntryExecutePrice", "ctx_ResolveOpenEntryPrice", CppUtils::simpleFloat2String(price) + " - " + ID_m.toString());
+
+	return price;
+}
+double TradeEntry::resolveOpenEntryExecuteTime()
+{
+	if (!isPositionOpened())			  
+		THROW(CppUtils::OperationFailed, "exc_EntryIsNotExecuted", "ctx_ResolveOpenEntryPrice", ID_m.toString())
+
+	double ttime = openEntries_m.back().time_m;
+	if (ttime <=0)
+		THROW(CppUtils::OperationFailed, "exc_InvalidOpenEntryExecuteTime", "ctx_ResolveOpenEntryTime", CppUtils::simpleFloat2String(ttime) + " - " + ID_m.toString());
+
+	return ttime;
+}
+
+
+bool TradeEntry::isPositionIsPending() const
+{
+	if (openEntries_m.size() >0 && closingEntries_m.size() == 0) {
+		PosChangeEntry const & last_change = openEntries_m.back();
+
+		if (last_change.state_m != POS_BUY && last_change.state_m != POS_SELL) {
+			return true;
+		}
+
+	}
+
+	return false;
+}
+
+bool TradeEntry::isPositionOpened() const
+{
+	if (openEntries_m.size() >0 ) {
+		PosChangeEntry const & last_change = openEntries_m.back();
+		if (last_change.state_m == POS_BUY || last_change.state_m == POS_SELL) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool TradeEntry::isPositionClosed() const
+{
+	if (closingEntries_m.size() > 0) {
+		PosChangeEntry const & last_close_change = closingEntries_m.back();
+		if (last_close_change.state_m == POS_CLOSE_LONG || last_close_change.state_m == POS_CLOSE_SHORT) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+
+void TradeEntry::processCalncellationAllPos(BrkLib::Order const& order)
+{
+	// resolve all broker order IDs
+}
+
+void TradeEntry::processCancellation(BrkLib::Order const& order)
+{
+	if (order.brokerOrderID_m.size() <= 0)
+			THROW(CppUtils::OperationFailed, "exc_InavlidBrokerOrderId", "ctx_CancelOrder", "");
+
+	PosChangeEntry* open_entry = resolveEntryViaBrokerOrderId(openEntries_m, order.brokerOrderID_m);
+	PosChangeEntry* close_entry = resolveEntryViaBrokerOrderId(closingEntries_m, order.brokerOrderID_m);
+
+	if (open_entry!= NULL && !open_entry->entryCancelled_m) {
+		if (open_entry->state_m != POS_BUY && open_entry->state_m != POS_SELL) {
+			open_entry->entryCancelled_m = true;
+
+			rtbroker_m->sendResponseOnPendingOperation(
+				*rtsession_m,
+				ID_m.toString(), 
+				-1,
+				-1, 
+				OP_ORDER_CANCEL,
+				-1, 
+				-1, 
+				PT_ORDER_CANCELLED, 
+				ODR_OK,
+				symbol_m,
+				provider_m,
+				open_entry->order_m, // original order!
+				&order
+			);
+		}
+		else {
+			THROW(CppUtils::OperationFailed, "exc_CannotCancelExecutedOrder", "ctx_CancelOrder", order.brokerOrderID_m);
+		}
+	}
+
+	if (close_entry!= NULL && !close_entry->entryCancelled_m) {
+		if (close_entry->state_m != POS_CLOSE_LONG && close_entry->state_m != POS_CLOSE_SHORT) {
+			close_entry->entryCancelled_m = true;
+
+			rtbroker_m->sendResponseOnPendingOperation(
+				*rtsession_m,
+				ID_m.toString(), 
+				-1,
+				-1, 
+				OP_ORDER_CANCEL,
+				-1, 
+				-1, 
+				PT_ORDER_CANCELLED, 
+				ODR_OK,
+				symbol_m,
+				provider_m,
+				close_entry->order_m, // original order
+				&order
+			);
+		}
+		else {
+			THROW(CppUtils::OperationFailed, "exc_CannotCancelExecutedOrder", "ctx_CancelOrder", order.brokerOrderID_m);
+		}
+	}
+
+	
+}
+
+
+TradeEntry::PosChangeEntry * TradeEntry::resolveEntryViaBrokerOrderId(list<PosChangeEntry>& entries, CppUtils::String const& brokerOrderId)
+{
+	for(list<PosChangeEntry>::iterator ig = entries.begin(); ig != entries.end(); ig++) {
+		PosChangeEntry & entry = *ig;
+		if (entry.order_m.ID_m.toString() == brokerOrderId)
+			return &entry;
+	}
+
+
+
+	return NULL;
+
+}
+
+void TradeEntry::initializeNewEntry(
+																		CppUtils::Uid const&uid, 
+																		TradeEntry& entry, 
+																		CppUtils::String const& provider, 
+																		CppUtils::String const& symbol,
+																		SymbolTradingInfo const& tinfo
+																		)
+{
+	entry.ID_m = uid;
+	entry.provider_m = provider;
+	entry.symbol_m = symbol;
+	entry.tinfo_m = tinfo;
+	entry.symbol_m = symbol;
+}
+
+								 
+void TradeEntry::registerEntryInOpenEntries(PosChangeEntry const& entry)
+{
+	openEntries_m.push_back(entry);
+
+	if (entry.order_m.orderType_m != BrkLib::OP_BUY && entry.order_m.orderType_m != BrkLib::OP_SELL) {
+		LOG(MSG_INFO, "registerEntryInOpenEntries(...)", "Wrong...");
+	
+	}
+
+	LOG(MSG_INFO, "registerEntryInOpenEntries(...)", "Registered entry id order: " << BrkLib::getOrderSmallDescription(entry.order_m));
+}
+
+
+}; // end of namespace

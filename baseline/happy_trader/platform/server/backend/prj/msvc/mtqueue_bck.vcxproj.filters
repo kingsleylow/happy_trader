@@ -1,0 +1,1144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e2d85b4d-a5f6-49b3-af1e-89624230afa8}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\cpputils Source Files">
+      <UniqueIdentifier>{5d8f7919-3d3f-4a37-90bc-015fa3e4f95e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cpputils Source Files\Sysdep Sources">
+      <UniqueIdentifier>{0ae89a1f-fd47-4a6f-9655-df1c06322a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{137db811-2c62-40b3-8617-0e80a9df66d2}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\cpputils Header Files">
+      <UniqueIdentifier>{469fa6af-06c3-4e50-9c85-213f652405a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpputils Header Files\Sysdep Headers">
+      <UniqueIdentifier>{7a649e3d-bfb9-4cf4-9fda-f2b1d4dc6c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crypto Files">
+      <UniqueIdentifier>{9ffdfaa8-43e5-4382-9470-cec86dbafe13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT4">
+      <UniqueIdentifier>{d1a47154-bd04-48fc-8d6c-61d6cb36e0cd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\mtqueue\mtqueue_bck.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\adhoc.cpp.proto">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptdll.dsp">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptdll.vcproj">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptest.dsp">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptlib.dsp">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptlib.vcproj">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\cryptlib_bds.bdsproj">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\dlltest.dsp">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\dlltest.vcproj">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\Doxyfile">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\GNUmakefile">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\x64dll.asm">
+      <Filter>Crypto Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\shared\crypto\x64masm.asm">
+      <Filter>Crypto Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\mtqueue\mtqueuecore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\bootmgr.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\chunk.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\except.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\processmgr.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\refcounted.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\reference.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\rootobj.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\servicethread.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\signature.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\uid.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\value.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\config.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\config.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\event.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\filelock.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\log.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\mutex.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\process.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\semaphore.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sharedres.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sysdep.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\thread.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\mtqueuemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\helperstruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\transport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\bootmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\parseurl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\3way.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\adler32.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\algebra.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\algparam.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\arc4.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\asn.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\authenc.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\base32.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\base64.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\basecode.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\bench.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\bench2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\bfinit.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\blowfish.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\blumshub.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\camellia.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cast.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\casts.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cbcmac.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ccm.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\channels.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cmac.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cpu.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\crc.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cryptlib.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\cryptlib_bds.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\datatest.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\default.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\des.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dessp.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dh.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dh2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dll.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dlltest.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\dsa.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\eax.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ec2n.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\eccrypto.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ecp.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\elgamal.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\emsa2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\eprecomp.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\esign.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\files.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\filters.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\fips140.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\fipsalgt.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\fipstest.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gcm.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gf2_32.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gf2n.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gf256.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gfpcrypt.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gost.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\gzip.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\hex.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\hmac.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\hrtimer.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ida.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\idea.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\integer.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\iterhash.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\luc.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\mars.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\marss.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\md2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\md4.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\md5.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\misc.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\modes.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\mqueue.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\mqv.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\nbtheory.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\network.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\oaep.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\osrng.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\panama.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\pch.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\pkcspad.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\polynomi.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\pssr.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\pubkey.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\queue.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rabin.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\randpool.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rc2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rc5.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rc6.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rdtables.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\regtest.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rijndael.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ripemd.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rng.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rsa.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\rw.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\safer.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\salsa.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\seal.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\seed.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\serpent.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\sha.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\sha3.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\shacal2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\shark.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\sharkbox.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\simple.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\skipjack.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\socketft.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\sosemanuk.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\square.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\squaretb.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\strciphr.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\tea.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\test.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\tftables.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\tiger.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\tigertab.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\trdlocal.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\ttmac.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\twofish.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\vmac.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\wait.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\wake.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\whrlpool.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\winpipes.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\xtr.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\xtrcrypt.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\zdeflate.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\zinflate.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\zlib.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\validat1.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\validat2.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\crypto\validat3.cpp">
+      <Filter>Crypto Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\md5_ht.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\misc_ht.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtqueue\handlers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\msgboxtout.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\dllmain.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\mtqueue\mtqueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\mtqueuecore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\mtqueuedefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\assertdef.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\bootmgr.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\chunk.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\config.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputils.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputilsdefs.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\event.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\except.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\filelock.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\functor.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\langdefs.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\log.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\mutex.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\process.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\processmgr.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\pywrapper.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\refcounted.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\reference.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\rootobj.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\semaphore.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\servicethread.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sharedres.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\signature.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\template.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\thread.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\uid.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\value.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\sysdep.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\system.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\system.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\mtqueuemanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\helperstruct.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\transport.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\bootmanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\parseurl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\3way.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\adler32.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\aes.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\algebra.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\algparam.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\arc4.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\argnames.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\asn.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\authenc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\base32.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\base64.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\basecode.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\bench.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\blowfish.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\blumshub.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\camellia.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\cast.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\cbcmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ccm.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\channels.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\cmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\config.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\cpu.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\crc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\cryptlib.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\default.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\des.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\dh.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\dh2.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\dll.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\dmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\dsa.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\eax.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ec2n.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\eccrypto.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ecp.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\elgamal.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\emsa2.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\eprecomp.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\esign.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\factory.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\files.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\filters.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\fips140.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\fltrimpl.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gcm.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gf2_32.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gf2n.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gf256.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gfpcrypt.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gost.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\gzip.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\hex.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\hmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\hrtimer.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ida.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\idea.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\integer.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\iterhash.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\lubyrack.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\luc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\mars.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\md2.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\md4.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\md5.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\mdc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\misc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\modarith.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\modes.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\modexppc.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\mqueue.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\mqv.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\nbtheory.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\network.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\nr.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\oaep.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\oids.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\osrng.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\panama.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\pch.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\pkcspad.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\polynomi.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\pssr.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\pubkey.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\pwdbased.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\queue.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rabin.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\randpool.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rc2.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rc5.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rc6.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\resource.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rijndael.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ripemd.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rng.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rsa.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\rw.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\safer.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\salsa.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\seal.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\secblock.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\seckey.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\seed.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\serpent.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\serpentp.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\sha.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\sha3.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\shacal2.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\shark.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\simple.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\skipjack.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\smartptr.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\socketft.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\sosemanuk.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\square.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\stdcpp.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\strciphr.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\tea.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\tiger.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\trdlocal.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\trunhash.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\ttmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\twofish.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\validate.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\vmac.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\wait.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\wake.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\whrlpool.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\winpipes.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\words.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\xtr.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\xtrcrypt.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\zdeflate.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\zinflate.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\crypto\zlib.h">
+      <Filter>Crypto Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\md5_ht.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\misc_ht.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtqueue\handlers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddeserverwrap.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\..\..\shared\crypto\cryptopp.rc">
+      <Filter>Crypto Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\shared\crypto\License.txt">
+      <Filter>Crypto Files</Filter>
+    </Text>
+    <Text Include="..\..\..\..\..\shared\crypto\Readme.txt">
+      <Filter>Crypto Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\mtqueue\mt4\bt_library.mq4">
+      <Filter>MT4</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0c9c2243-9efd-45f9-81f8-9783dbf664d6}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7aaba4b6-941c-45f4-97d8-396773162e10}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Json Header Files">
+      <UniqueIdentifier>{0233885c-e9f8-4fc4-9da5-1e63db3d8711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rapid XML Header Files">
+      <UniqueIdentifier>{053914bd-8a21-4c9b-a8a1-4a8a82490bd7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\hlpstruct\bootmgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\callcontext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\commonhelperstructs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\human_xmlparam_serializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\multcache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\stringtable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmldrawableobj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmleventdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmllevel1data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmllevel2data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmlparameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmlrtdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmlrtdatadiskbuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hlpstruct\xmlwrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\hlpstruct\bootmgr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\callcontext.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\commonhelperstructs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\contextdatahelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\global.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\globaldata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\hlpstruct.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\hlpstructdefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\human_xmlparam_serializer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\multcache.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\pricedata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\proxybase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\robotmanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\serializehelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\stringtable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmldrawableobj.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmleventdata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmllevel1data.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmllevel2data.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmlparameter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmlrtdata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmlrtdatadiskbuf.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\xmlwrap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\json\elements.h">
+      <Filter>Header Files\Json Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\json\reader.h">
+      <Filter>Header Files\Json Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\json\visitor.h">
+      <Filter>Header Files\Json Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\json\writer.h">
+      <Filter>Header Files\Json Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_iterators.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_print.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_utils.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\hlpstruct\json\elements.inl">
+      <Filter>Header Files\Json Header Files</Filter>
+    </None>
+    <None Include="..\..\src\hlpstruct\json\reader.inl">
+      <Filter>Header Files\Json Header Files</Filter>
+    </None>
+    <None Include="..\..\src\hlpstruct\json\writer.inl">
+      <Filter>Header Files\Json Header Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

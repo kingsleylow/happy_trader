@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{075847FA-A037-4390-9185-7F24EBC4F8A0}</ProjectGuid>
+    <RootNamespace>smartcom_proxy2</RootNamespace>
+    <Keyword>AtlProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Debug\</OutDir>
+    <IntDir>.\../../obj/Debug/smartcom_proxy2\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Release\</OutDir>
+    <IntDir>.\../../obj/Release/smartcom_proxy2\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)smartcom_proxy2.tlb</TypeLibraryName>
+      <OutputDirectory>..\..\src\smartcom_proxy2\</OutputDirectory>
+      <HeaderFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_i.h</HeaderFileName>
+      <DllDataFileName>..\..\src\smartcom_proxy2\dlldata.c</DllDataFileName>
+      <InterfaceIdentifierFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_p.c</ProxyFileName>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;_MERGE_PROXYSTUB;HANDLE_NATIVE_EXCEPTIONS;SERVICE_BACKEND_DLLS;SMARTCOMPROXY2_BCK_EXPORTS;_BIND_TO_CURRENT_VCLIBS_VERSION;__ATL_PRIVATE_DEP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader />
+      <AssemblerListingLocation>.\../../obj/Debug/smartcom_proxy2/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Debug/smartcom_proxy2/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Debug/smartcom_proxy2/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <RegisterOutput>false</RegisterOutput>
+      <OutputFile>../../../lib/win32_i86/Debug/smartcom_proxy2_d.dll</OutputFile>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <ModuleDefinitionFile>..\..\src\smartcom_proxy2\smartcom_proxy2_d.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Debug/smartcom_proxy2_d.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Debug/smartcom_proxy2_d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetFileName).embed.manifest</OutputManifestFile>
+    </Manifest>
+    <PostBuildEvent>
+      <Command>copy                $(OutDir)\smartcom_proxy2_d.dll                    ..\..\..\..\..\bin\win32_i86\Debug\
+regsvr32         /s ..\..\..\..\..\bin\win32_i86\Debug\smartcom_proxy2_d.dll
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)smartcom_proxy2.tlb</TypeLibraryName>
+      <OutputDirectory>..\..\src\smartcom_proxy2\</OutputDirectory>
+      <HeaderFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_i.h</HeaderFileName>
+      <DllDataFileName>..\..\src\smartcom_proxy2\dlldata.c</DllDataFileName>
+      <InterfaceIdentifierFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>..\..\src\smartcom_proxy2\smartcom_proxy2_p.c</ProxyFileName>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;_MERGE_PROXYSTUB;HANDLE_NATIVE_EXCEPTIONS;SERVICE_BACKEND_DLLS;SMARTCOMPROXY2_BCK_EXPORTS;_BIND_TO_CURRENT_VCLIBS_VERSION;__ATL_PRIVATE_DEP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader />
+      <AssemblerListingLocation>.\../../obj/Release/smartcom_proxy2/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Release/smartcom_proxy2/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Release/smartcom_proxy2/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <RegisterOutput>false</RegisterOutput>
+      <OutputFile>../../../lib/win32_i86/Release/smartcom_proxy2.dll</OutputFile>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <ModuleDefinitionFile>..\..\src\smartcom_proxy2\smartcom_proxy2.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Release/smartcom_proxy2.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Release/smartcom_proxy2.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy                $(OutDir)\smartcom_proxy2.dll                    ..\..\..\..\..\bin\win32_i86\Release\
+copy                $(OutDir)\smartcom_proxy2.pdb                ..\..\..\..\..\bin\win32_i86\Release\
+regsvr32         /s ..\..\..\..\..\bin\win32_i86\Release\smartcom_proxy2.pdb
+
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\smartcom_proxy2\dlldata.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\smartcom_proxy2\dlldatax.c" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\dllmain.cpp" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\MainDlg.cpp" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\MainSmartComEngine.cpp" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\simulator.cpp" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\smartcom_proxy2.cpp" />
+    <ClCompile Include="..\..\src\smartcom_proxy2\smartcom_proxy2_i.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="..\..\src\smartcom_proxy2\smartcom_proxy2.idl">
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_i.h</HeaderFileName>
+      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\smartcom_proxy2\dlldata.c</DllDataFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_p.c</ProxyFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_i.h</HeaderFileName>
+      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\smartcom_proxy2\dlldata.c</DllDataFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\smartcom_proxy2\smartcom_proxy2_p.c</ProxyFileName>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\smartcom_proxy2\dlldatax.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\dllmain.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\helperstruct.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\MainDlg.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\MainSmartComEngine.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\resource.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\simulator.hpp" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\smartcom_proxy2defs.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\targetver.h" />
+    <ClInclude Include="..\..\src\smartcom_proxy2\smartcom_proxy2_i.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\src\smartcom_proxy2\ico00001.ico" />
+    <Image Include="..\..\src\smartcom_proxy2\ico00002.ico" />
+    <Image Include="..\..\src\smartcom_proxy2\icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\smartcom_proxy2\MainSmartComEngine.rgs" />
+    <None Include="..\..\src\smartcom_proxy2\MainSmartComEngineCallback.rgs" />
+    <None Include="..\..\src\smartcom_proxy2\smartcom_proxy2.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\smartcom_proxy2\smartcom_proxy2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\shared\cpputils\prj\msvc\cpputils.vcxproj">
+      <Project>{d1fe5551-dc06-4a78-b76d-5663458975df}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\shared\testframe\prj\msvc\testframe.vcxproj">
+      <Project>{0d13afbc-9339-49b6-8fe5-36df5f5f637a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="hlpstruct_bck.vcxproj">
+      <Project>{40e2248c-0000-0000-0000-000000000000}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="inqueue_bck.vcxproj">
+      <Project>{4b428d5f-bd05-439b-1dcb-ba14d8aa6056}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="\work\happy_trader\platform\server\backend\src\smartcom_proxy2\smartcom_proxy2.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

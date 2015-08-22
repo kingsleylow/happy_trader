@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{801DF79F-F650-461C-9E18-8117908FD4A7}</ProjectGuid>
+    <SccProjectName />
+    <SccLocalPath />
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\..\..\..\lib\win32_i86\Debug\</OutDir>
+    <IntDir>.\../../obj/Debug/alglibmetatrader2\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\..\..\..\lib\win32_i86\Release\</OutDir>
+    <IntDir>.\../../obj/Release/alglibmetatrader\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;$(HT_DEVEL_ROOT)\extern\tools\gsoap-2.8\gsoap;$(HT_DEVEL_ROOT)\extern\tools\gsoap-2.8\gsoap\import;$(HT_DEVEL_ROOT)\extern\msvc\db-6.0.20\build_windows\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;ALGLIBMETATRADER2_BCK_EXPORTS;CPPUTILS_DLL;SERVICE_BACKEND_DLLS;HANDLE_NATIVE_EXCEPTIONS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Debug/alglibmetatrader2/alglibmetatrader2_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Debug/alglibmetatrader2/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Debug/alglibmetatrader2/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Debug/alglibmetatrader2/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Debug/htalglibmetatrader2_bck_d.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)\extern\msvc\db-6.0.20\build_windows\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Debug/htalglibmetatrader2_bck_d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>.\../../../lib/win32_i86/Debug/htalglibmetatrader2_bck_d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Debug/alglibmetatrader2_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\htalglibmetatrader2_bck_d.dll                  ..\..\..\..\..\bin\win32_i86\Debug\</Command>
+    </PostBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;$(HT_DEVEL_ROOT)\extern\tools\gsoap-2.8\gsoap;$(HT_DEVEL_ROOT)\extern\tools\gsoap-2.8\gsoap\import;$(HT_DEVEL_ROOT)\extern\msvc\db-6.0.20\build_windows\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;ALGLIBMETATRADER2_BCK_EXPORTS;CPPUTILS_DLL;SERVICE_BACKEND_DLLS;HANDLE_NATIVE_EXCEPTIONS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Release/alglibmetatrader2/alglibmetatrader2_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Release/alglibmetatrader2/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Release/alglibmetatrader2/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Release/alglibmetatrader2/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../lib/win32_i86/Release/htalglibmetatrader2_bck.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)\extern\msvc\db-6.0.20\build_windows\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Release/htalglibmetatrader2_bck.pdb</ProgramDatabaseFile>
+      <ImportLibrary>.\../../../lib/win32_i86/Release/htalglibmetatrader2_bck.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Release/alglibmetatrader2_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\htalglibmetatrader2_bck.dll                  ..\..\..\..\..\bin\win32_i86\Release\
+copy                $(OutDir)\htalglibmetatrader2_bck.pdb               ..\..\..\..\..\bin\win32_i86\Release\</Command>
+    </PostBuildEvent>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <CustomBuild>
+      <Command>%25HT_DEVEL_ROOT%25\extern\tools\gsoap-2.8\gsoap\bin\win32\wsdl2h.exe -t "%25HT_DEVEL_ROOT%25\extern\tools\gsoap-2.8\gsoap\typemap.dat" -N "gt" %(FullPath)
+%25HT_DEVEL_ROOT%25\extern\tools\gsoap-2.8\gsoap\bin\win32\soapcpp2 -I "%25HT_DEVEL_ROOT%25\extern\tools\gsoap-2.8\gsoap\import" %(FullPath)
+</Command>
+    </CustomBuild>
+    <CustomBuild>
+      <Outputs>%(Filename).h;empty.nsmap;soapC.cpp;soapH.cpp;soapStub.h</Outputs>
+    </CustomBuild>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\alglibmetatrader2\alglibmetatrader2.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\alglibmetatrader2defs.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\algorithmmt.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\commonstruct.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\ConsoleLogger.h" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_mt_request.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packets_base.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packets_mt.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_mt_response.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_out.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtrunner.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtworkermanager.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtworkerthread.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\settingsmanager.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\shared.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\shared_defs.hpp" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\xsd\auto\soapH.h" />
+    <ClInclude Include="..\..\src\alglibmetatrader2\xsd\auto\soapStub.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\extern\tools\gsoap-2.8\gsoap\stdsoap2.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\algorithmmt.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\ConsoleLogger.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtrunner.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtworkermanager.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtworkerthread.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\settingsmanager.cpp" />
+    <ClCompile Include="..\..\src\alglibmetatrader2\xsd\auto\soapC.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\shared\cpputils\prj\msvc\cpputils.vcxproj">
+      <Project>{d1fe5551-dc06-4a78-b76d-5663458975df}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\shared\testframe\prj\msvc\testframe.vcxproj">
+      <Project>{0d13afbc-9339-49b6-8fe5-36df5f5f637a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="alglib_bck.vcxproj">
+      <Project>{ab128d6f-bd05-479b-1dcb-bc14e8aa6006}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="brklib_bck.vcxproj">
+      <Project>{f6ef8d0c-0000-0000-0000-000000000000}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="hlpstruct_bck.vcxproj">
+      <Project>{40e2248c-0000-0000-0000-000000000000}</Project>
+    </ProjectReference>
+    <ProjectReference Include="inqueue_bck.vcxproj">
+      <Project>{4b428d5f-bd05-439b-1dcb-ba14d8aa6056}</Project>
+    </ProjectReference>
+    <ProjectReference Include="math_bck.vcxproj">
+      <Project>{e5ae3856-d3f5-47a9-8815-c81425f73e85}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\alglibmetatrader2\xsd\compile2.cmd">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\alglibmetatrader2\xsd\compile2.cmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\alglibmetatrader2\xsd\compile2.cmd</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">tmp.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">tmp.h</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\alglibmetatrader2\xsd\auto\empty.nsmap" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="..\..\src\alglibmetatrader2\xsd\ht_settings.xsd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

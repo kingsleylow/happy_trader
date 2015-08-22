@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/work/happy_trader/platform/client/clientHT/clientUI/../../../../../dell/dell_work/VSTS/GOAPPS/BO%20Baseline/iPayment/XSD/XXG_IBY_CUSTOM_INSTRUCTION_1_0.xsd" uri="xml-resources/jaxb/dummy1/XXG_IBY_CUSTOM_INSTRUCTION_1_0.xsd"/>
+    <system systemId="file:/C:/work/happy_trader/platform/client/clientHT/clientUI/xml-resources/jaxb/HTTP_COMMAND_GATEWAY.xsd" uri="xml-resources/jaxb/httpcommandgateway/HTTP_COMMAND_GATEWAY.xsd"/>
+    <system systemId="file:/C:/work/happy_trader/platform/client/clientHT/clientUI/../../../../../../temp/HTTP_COMMAND_REQUEST.xsd" uri="xml-resources/jaxb/http_command_request/HTTP_COMMAND_REQUEST.xsd"/>
+</catalog>

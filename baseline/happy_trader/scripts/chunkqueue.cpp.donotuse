@@ -1,0 +1,2311 @@
+/*
+ * chainbuf.h --- Header for chainbufs.
+ * 
+ * (c) 1999 aka50<sobaka>yandex.ru
+ *
+ */
+#ifndef _CHAINBUF_H
+#define _CHAINBUF_H
+
+#include <sys/types.h>
+#include <sys/queue.h>
+#include <stdarg.h>
+
+#define CB_MODNAME "chainbuf"
+#define CB_VERSION 1
+
+#ifndef QUAD_MAX
+#define QUAD_MAX LONG_LONG_MAX
+#endif /* QUAD_MAX */
+
+#define CB_CHAIN_MAGIC          0xdeedaffd
+
+#define CB_PAGE_SHIFT           10   /* expanding chain structure by 1024 */
+#define CB_ALLOW_COPY_SIZE      4096
+#define CB_SIGNIFICANT_SIZE     4096
+
+#define CB_MODE_DFLT            CB_MODE_APPND
+#define CB_MODE_APPND           1
+#define CB_MODE_PREP            2
+#define CB_MODE_REPL            3
+
+
+#ifdef CHAINBUF_VERBOSE
+
+#include <stdio.h>
+#include <unistd.h>
+
+#define DUMP_CB(cbc) do {                                                                                               \
+        cb_node_s *n;                                                                                                   \
+        int i;                                                                                                          \
+                                                                                                                        \
+        i = 0;                                                                                                          \
+        fprintf(stderr, "========================= size = %d; nodes = %d", cb_size(cbc), cbc->cc_nodes);                \
+                                                                                                                        \
+        TAILQ_FOREACH(n, &cbc->cc_head, link){                                                                          \
+                fprintf(stderr, "%d: %d => [%d : %d]", i, n->cn_size, n->cn_fb, n->cn_lb);                              \
+                for (i = n->cn_fb; i < n->cn_lb; i+=16){                                                                \
+                        fprintf(stderr, "%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x",                  \
+                                 *(char *)(n->cn_data + i),                                                             \
+                                 *(char *)(n->cn_data + i + 1),                                                         \
+                                 *(char *)(n->cn_data + i + 2),                                                         \
+                                 *(char *)(n->cn_data + i + 3),                                                         \
+                                 *(char *)(n->cn_data + i + 4),                                                         \
+                                 *(char *)(n->cn_data + i + 5),                                                         \
+                                 *(char *)(n->cn_data + i + 6),                                                         \
+                                 *(char *)(n->cn_data + i + 7),                                                         \
+                                 *(char *)(n->cn_data + i + 8),                                                         \
+                                 *(char *)(n->cn_data + i + 9),                                                         \
+                                 *(char *)(n->cn_data + i + 10),                                                        \
+                                 *(char *)(n->cn_data + i + 11),                                                        \
+                                 *(char *)(n->cn_data + i + 12),                                                        \
+                                 *(char *)(n->cn_data + i + 13),                                                        \
+                                 *(char *)(n->cn_data + i + 14),                                                        \
+                                 *(char *)(n->cn_data + i + 15)                                                         \
+                                 );                                                                                     \
+                }                                                                                                       \
+        }                                                                                                               \
+} while (0)
+
+#define DUMP_CB_INT(cbc) do {                                                                                           \
+        cb_node_s *n;                                                                                                   \
+        int i;                                                                                                          \
+                                                                                                                        \
+        i = 0;                                                                                                          \
+        fprintf(stderr, "========================= size = %d; nodes = %d", cb_size(cbc), (cbc)->cc_nodes);              \
+                                                                                                                        \
+        TAILQ_FOREACH(n, &(cbc)->cc_head, link){                                                                        \
+                fprintf(stderr, "%d: %d => [%d : %d]", i, n->cn_size, n->cn_fb, n->cn_lb);                              \
+                for (i = n->cn_fb; i < n->cn_lb; i+=16){                                                                \
+                        fprintf(stderr, "%08x %08x %08x %08x ",                                                         \
+                                 *(int *)(n->cn_data + i),                                                              \
+                                 *(int *)(n->cn_data + i + 4),                                                          \
+                                 *(int *)(n->cn_data + i + 8),                                                          \
+                                 *(int *)(n->cn_data + i + 12)                                                          \
+                                 );                                                                                     \
+                }                                                                                                       \
+        }                                                                                                               \
+} while (0)
+
+#define CB_INIT(cb) do {                                                                        \
+        fprintf(stderr, "%d=== CB_INIT(): %s:%s:%d %p\n", getpid(), __FILE__, __FUNCTION__, __LINE__, cb);      \
+        cb_init(cb);                                                                            \
+} while (0)
+
+#define CB_DROP(cb) do {                                                                        \
+        fprintf(stderr, "%d=== CB_DROP(): %s:%s:%d %p\n", getpid(), __FILE__, __FUNCTION__, __LINE__, cb);      \
+        cb_drop(cb);                                                                            \
+} while (0)
+
+#define CB_FREE(cb) do {                                                                        \
+        fprintf(stderr, "%d=== CB_FREE(): %s:%s:%d %p\n", getpid(), __FILE__, __FUNCTION__, __LINE__, cb);      \
+        cb_free(cb);                                                                            \
+} while (0)
+
+
+#else 
+#define CB_INIT(cb) cb_init(cb)
+#define CB_FREE(cb) cb_free(cb)
+#define CB_DROP(cb) cb_drop(cb)
+#define DUMP_CB(cb)
+#define DUMP_CB_INT(cb)
+#endif
+
+
+
+#define CB_PAGE(pshift, size) ((((size)>>(pshift))+1)<<(pshift))
+
+typedef struct cb_node {
+        TAILQ_ENTRY(cb_node) link;
+
+        size_t  cn_fb, cn_lb;
+        size_t  cn_size;
+
+        int     cn_flags;
+#define CB_NODE_F_INLIST 0x1
+
+        void    *cn_data;
+/*      char    cn_ds[1]; */
+} cb_node_s;
+
+TAILQ_HEAD(cb_chain_head, cb_node);
+
+typedef struct cb_chain {
+        u_int  cc_magic;
+
+        struct cb_chain_head cc_head;
+        size_t cc_total;
+        size_t cc_nodes;
+        u_int32_t cc_flags;
+#define CB_F_ALLOW_SPLIT        0x1
+#define CB_F_ZERO_NODES         0x2
+#define CB_F_ADD_EXACT          0x4 /* each data chunk placed on new node */
+
+#define CB_F_DEFAULT    (CB_F_ALLOW_SPLIT)
+
+        union {
+                int32_t ia;
+                u_int32_t uia;
+                void *ptr;
+        } uap;
+} cb_chain_s;
+
+typedef struct cb_chain         *cb_chain_p;
+
+#define cb_append_str(chain, str) cb_append(chain, str, strlen(str));
+#define cb_prepend_str(chain, str) cb_prepend(chain, str, strlen(str));
+/* #define cb_size(chain) ((chain)->cc_total) */
+
+void chainbuf_init(void);
+void chainbuf_fini(void);
+
+
+int  cb_init(cb_chain_s *chain);
+int  cb_drop(cb_chain_s *chain);
+void cb_free(cb_chain_s *chain);
+size_t cb_size(cb_chain_s *chain);
+int  cb_getf(cb_chain_s *chain);
+void cb_setf(cb_chain_s *chain, int flags);
+int  cb_check(cb_chain_s *chain);
+
+int  cb_append(cb_chain_s *chain, const void *data, size_t size);
+int  cb_move(cb_chain_s *dst, cb_chain_s *src, int mode);
+int  cb_copy(cb_chain_s *dst, cb_chain_s *src, size_t from, size_t to);
+int  cb_prepend(cb_chain_s *chain, const void *data, size_t size);
+int  cb_extend(cb_chain_s *chain, size_t amount, char **dptr);
+int  cb_truncate(cb_chain_s *dst, cb_chain_s *src, size_t amount);
+int  cb_pullup(cb_chain_s *chain, size_t from, size_t to, char **dptr);
+int  cb_get_pulluped(cb_chain_s *chain, size_t from, char **dptr, size_t *sz);
+int  cb_cut(cb_chain_s *dst, cb_chain_s *src, size_t from, size_t to);
+
+int  cb_strchr(cb_chain_s *chain, char ch);
+int  cb_strstr(cb_chain_s *chain, size_t spos, const char *str);
+
+int  cb_strfmt(cb_chain_s *chain, int mode, const char *fmt, ...);
+int  cb_vstrfmt(cb_chain_s *chain, int mode, const char *fmt, va_list ap);
+
+float cb_avg_load(cb_chain_s *chain);
+
+char *cb_tod(cb_chain_s *chain);
+char *cb_tostr(cb_chain_s *chain);
+
+int  cb_set_bit(cb_chain_s *chain, size_t pos, int val);
+int  cb_isset_bit(cb_chain_s *chain, size_t pos);
+int  cb_compact_bits(cb_chain_s *chain);
+
+#endif
+ 
+
+
+
+/*
+ * chainbuf -- Memory buffers based on linked lists.
+ *
+ * (c) 1999 aka50<sobaka>yandex.ru
+ *
+ */
+#include <sys/types.h>
+
+#include <errno.h>
+#include <limits.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+#include <queue.h>
+#include <dmalloc.h>
+#include <modex.h>
+
+#ifdef DEBUG
+#include <unistd.h>
+#endif
+
+#include "chainbuf.h"
+
+struct modexsymtab_s chainbuf_funtab[] = {
+        CB_FUNTAB,
+        MODEF_NULL
+};
+
+int  cb_init(cb_chain_s *chain);
+void cb_free(cb_chain_s *chain);
+int  cb_append(cb_chain_s *chain, const void *data, size_t size);
+int  cb_prepend(cb_chain_s *chain, const void *data, size_t size);
+
+#ifdef CHAINBUF_VERBOSE
+#define new_node(data, size, flags) new_node_((data), (size), (flags), __FILE__, __FUNCTION__, __LINE__)
+#define new_node2(data, size, rsize, flags) new_node2_((data), (size), (rsize), (flags), __FILE__, __FUNCTION__, __LINE__)
+static cb_node_s *new_node_(const void *data, size_t size, int flags, char *file, char *func, int line);
+static cb_node_s *new_node2_(const void *data, size_t size, size_t rsize, int flags, char *file, char *func, int line);
+#else
+static cb_node_s *new_node(const void *data, size_t size, int flags);
+static cb_node_s *new_node2(const void *data, size_t size, size_t rsize, int flags);
+#endif
+
+#ifdef DEBUG
+static int chk_integrity(cb_chain_s *chain, const char *file, const char *func, int line);
+static void free_node_(cb_node_s *n, const char *file, const char *func, int line);
+#define free_node(node) free_node_(node, __FILE__, __FUNCTION__, __LINE__)
+
+#define CHECK_CHAINBUF(chain)  chk_integrity(chain, __FILE__, __FUNCTION__, __LINE__)
+
+#else
+static void free_node(cb_node_s *n);
+
+#define CHECK_CHAINBUF(chain)  ((chain == NULL) || chain->cc_magic != CB_CHAIN_MAGIC)
+#endif
+
+static int cutnjoin(cb_chain_s *dst, cb_chain_s *src, cb_node_s *node, size_t lfrom, size_t *to);
+
+#ifdef CHAINBUF_VERBOSE
+#define CB_ADD_TO_HEAD(chain, node) do {                                                                                                \
+        TAILQ_INSERT_HEAD(&(chain)->cc_head, node, link);                                                                               \
+        node->cn_flags |= CB_NODE_F_INLIST;                                                                                             \
+        (chain)->cc_nodes++;                                                                                                            \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;                                                                               \
+        fprintf(stderr, "%d=== CB_ADD_TO_HEAD(): %s:%s %d: (%p,%p) [%p] => (|x|...%p)\n", getpid(), __FILE__, __FUNCTION__, __LINE__,   \
+                node->link.tqe_next, node->link.tqe_prev, node, chain);                                                                 \
+} while (0)
+
+#define CB_ADD_TO_TAIL(chain, node) do {                                                                                                \
+        TAILQ_INSERT_TAIL(&(chain)->cc_head, node, link);                                                                               \
+        node->cn_flags |= CB_NODE_F_INLIST;                                                                                             \
+        (chain)->cc_nodes++;                                                                                                            \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;                                                                               \
+        fprintf(stderr, "%d=== CB_ADD_TO_TAIL(): %s:%s %d: (%p,%p)  (%p...|x|) <= [%p]\n", getpid(), __FILE__, __FUNCTION__, __LINE__,  \
+                node->link.tqe_next, node->link.tqe_prev, chain, node);                                                                 \
+} while (0)
+
+#define CB_INS_BEFORE(chain, bnode, node) do {                                                                                          \
+        TAILQ_INSERT_BEFORE(bnode, node, link);                                                                                         \
+        node->cn_flags |= CB_NODE_F_INLIST;                                                                                             \
+        (chain)->cc_nodes++;                                                                                                            \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;                                                                               \
+        fprintf(stderr, "%d=== CB_INS_BEFORE(): %s:%s %d: (%p,%p) [%p] => (%p...|x|.%p)\n", getpid(), __FILE__, __FUNCTION__, __LINE__, \
+                node->link.tqe_next, node->link.tqe_prev, node, chain, bnode);                                                          \
+} while (0)
+
+#define CB_INS_AFTER(chain, anode, node) do {                                                                                             \
+        TAILQ_INSERT_AFTER(&(chain)->cc_head, anode, node, link);                                                                         \
+        node->cn_flags |= CB_NODE_F_INLIST;                                                                                               \
+        (chain)->cc_nodes++;                                                                                                              \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;                                                                                 \
+        fprintf(stderr, "%d=== CB_INS_AFTER(): %s:%s %d: (%p,%p) [%p] => (%p...%p.|x|...)\n", getpid(), __FILE__, __FUNCTION__, __LINE__, \
+                node->link.tqe_next, node->link.tqe_prev, node, chain, anode);                                                            \
+} while (0)
+
+
+#define CB_DEL_NODE(chain, node) do {                                                                                           \
+        TAILQ_REMOVE(&(chain)->cc_head, node, link);                                                                            \
+        node->cn_flags &= ~CB_NODE_F_INLIST;                                                                                    \
+        (chain)->cc_nodes--;                                                                                                    \
+        (chain)->cc_total-=(node)->cn_lb - (node)->cn_fb;                                                                       \
+        fprintf(stderr, "%d=== CB_DEL_NODE(): %s:%s %d: (%p,%p) %p => [%p]\n", getpid(), __FILE__, __FUNCTION__, __LINE__,      \
+                node->link.tqe_next, node->link.tqe_prev, chain, node);                                                         \
+} while (0)
+
+#else /* ! CHAINBUF_VERBOSE */
+
+#define CB_ADD_TO_HEAD(chain, node) do {                        \
+        TAILQ_INSERT_HEAD(&(chain)->cc_head, node, link);       \
+        node->cn_flags |= CB_NODE_F_INLIST;                     \
+        (chain)->cc_nodes++;                                    \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;       \
+} while (0)
+
+#define CB_ADD_TO_TAIL(chain, node) do {                        \
+        TAILQ_INSERT_TAIL(&(chain)->cc_head, node, link);       \
+        node->cn_flags |= CB_NODE_F_INLIST;                     \
+        (chain)->cc_nodes++;                                    \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;       \
+} while (0)
+
+#define CB_INS_BEFORE(chain, bnode, node) do {                  \
+        TAILQ_INSERT_BEFORE(bnode, node, link);                 \
+        node->cn_flags |= CB_NODE_F_INLIST;                     \
+        (chain)->cc_nodes++;                                    \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;       \
+} while (0)
+
+#define CB_INS_AFTER(chain, anode, node) do {                           \
+        TAILQ_INSERT_AFTER(&(chain)->cc_head, anode, node, link);       \
+        node->cn_flags |= CB_NODE_F_INLIST;                             \
+        (chain)->cc_nodes++;                                            \
+        (chain)->cc_total+=(node)->cn_lb - (node)->cn_fb;               \
+} while (0)
+
+
+#define CB_DEL_NODE(chain, node) do {                           \
+        TAILQ_REMOVE(&(chain)->cc_head, node, link);            \
+        node->cn_flags &= ~CB_NODE_F_INLIST;                    \
+        (chain)->cc_nodes--;                                    \
+        (chain)->cc_total-=(node)->cn_lb - (node)->cn_fb;       \
+} while (0)
+#endif
+
+
+#define CB_COPY_TAIL_TIMES 2  /* 2^CB_COPY_TAIL_TIMES */
+
+#define CB_ERRNO_SAFE(oper)             do { register int serr = errno; (oper); errno = serr; } while(0)
+
+#define CB_ERRNO_GOTO(er, label)        do { errno = (er); goto label; } while(0)
+#define CB_ERRNO_RET(er)                do { errno = (er); return -1; } while(0)
+#define CB_ERRNO_RETNULL(er)            do { errno = (er); return NULL; } while(0)
+
+#define CB_FAIL_RET(oper)               do { if ((oper) < 0) CB_ERRNO_RET(errno); } while(0)
+#define CB_FAIL_GOTO(oper, label)       do { if ((oper) < 0) CB_ERRNO_GOTO(errno, label); } while(0)
+
+static int cb_sprintf_int(cb_chain_s *cb, int mode, const char *fmt,  va_list ap);
+
+#ifdef CHAINBUF_VERBOSE
+static void
+print_cb(cb_chain_s *cc)
+{
+        cb_node_s *n;
+        int i, sum;
+
+        i = 0;
+        sum = 0;
+        TAILQ_FOREACH(n, &cc->cc_head, link) {
+                printf("%d: %d => [%d : %d] \n", i, n->cn_size, n->cn_fb, n->cn_lb);
+                sum += n->cn_lb - n->cn_fb;
+        }
+
+        if (sum != cc->cc_total) {
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                printf("ERROR: sum = %d != total = %d\n", sum, cc->cc_total);
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        }
+}
+#endif
+
+/*
+ * Initilize provided CB
+ *
+ */ 
+int
+cb_init(cb_chain_s *chain)
+{
+/*      if (chain->cc_magic == CB_CHAIN_MAGIC) */
+/*              CB_FREE(chain); */
+
+        DMEMSET(chain, 0, sizeof(struct cb_chain));
+        chain->cc_magic = CB_CHAIN_MAGIC;
+        chain->cc_flags = CB_F_DEFAULT;
+        TAILQ_INIT(&chain->cc_head);
+        return 0;
+}
+
+/*
+ * Return flags for CB
+ */
+int
+cb_getf(cb_chain_s *chain)
+{
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        return chain->cc_flags;
+}
+
+
+/*
+ * Set flags (see chainbuf.h)
+ */
+void
+cb_setf(cb_chain_s *chain, int flags)
+{
+        if (CHECK_CHAINBUF(chain))
+                return;
+
+        chain->cc_flags = flags;
+}
+
+/*
+ * Return pagesize for node allocator
+ */
+size_t
+cb_getpagesize(cb_chain_s *chain, size_t aprox)
+{
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        return  CB_PAGE(CB_PAGE_SHIFT, aprox + sizeof(cb_node_s)) - sizeof(cb_node_s);
+}
+
+/*
+ * Return total size of CB.
+ * XXX: On error, return 0 
+ */
+size_t
+cb_size(cb_chain_s *chain)
+{
+        if (CHECK_CHAINBUF(chain))
+                return 0;
+        return chain->cc_total;
+}
+
+
+/*
+ * Fast buffer reinitialization
+ */
+int
+cb_drop(cb_chain_s *chain)
+{
+        int flags = cb_getf(chain);
+
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        cb_free(chain);
+        cb_init(chain);
+        cb_setf(chain, flags);
+
+        return 0;
+}
+
+/*
+ * Complete CB destruction. Need cb_init() on the same structure after it
+ */
+void 
+cb_free(cb_chain_s *chain)
+{
+        cb_node_s *n;
+
+        if (CHECK_CHAINBUF(chain))
+                goto done;
+
+        while(!TAILQ_EMPTY(&chain->cc_head)) {
+                n = TAILQ_FIRST(&chain->cc_head);
+                CB_DEL_NODE(chain, n);
+                free_node(n);
+        }
+        chain->cc_magic = ~CB_CHAIN_MAGIC;
+        TAILQ_INIT(&chain->cc_head);
+done:
+        return;
+}
+
+/*
+ * Appends data to CB
+ */
+int
+cb_append(cb_chain_s *chain, const void *data, size_t size)
+{
+        cb_node_s *n;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if (size == 0)
+                return 0;
+
+        /* first check if any free space exists in last chunk */
+        n = TAILQ_LAST(&chain->cc_head, cb_chain_head);
+        if (n != NULL) {
+                register size_t sz = 0;
+                register size_t csum = 0;
+
+                /* shift data in chunk only if this is interesting */
+                csum = n->cn_lb - n->cn_fb;
+                if (n->cn_fb && csum < CB_ALLOW_COPY_SIZE) {
+                        DMEMCPY(n->cn_data, n->cn_data + n->cn_fb, csum);
+                        n->cn_fb = 0; 
+                        n->cn_lb = csum;
+                }
+
+                /* now append part of data to the last chunk */
+                sz = (n->cn_size - n->cn_lb < size) ? (n->cn_size - n->cn_lb) : size;
+                if (data != NULL) {
+                        DMEMCPY(n->cn_data + n->cn_lb, data, sz);
+                        data += sz;
+                } else if ((chain->cc_flags & CB_F_ZERO_NODES) == 1)
+                        DMEMSET(n->cn_data + n->cn_lb, 0, sz);
+                n->cn_lb += sz;
+                size -= sz;
+                chain->cc_total+=sz;
+        }
+        if (size == 0)
+                goto done;
+
+        n = new_node(data, size, chain->cc_flags);
+        if (n == NULL)
+                goto fail;
+
+        CB_ADD_TO_TAIL(chain, n);
+
+done:
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(chain)?"!!!ERR!!!":"OK");
+#endif
+        return 0;
+fail:
+        return -1;
+}
+
+/*
+ * Fast exchange beetween to CBs
+ */
+int
+cb_move(cb_chain_s *dst, cb_chain_s *src, int mode)
+{
+        cb_node_s *n, *n2;
+
+        if (CHECK_CHAINBUF(dst) || CHECK_CHAINBUF(src))
+                CB_ERRNO_RET(EINVAL);
+
+        if (mode == CB_MODE_REPL)
+                CB_DROP(dst);
+
+        if (cb_size(src) == 0)
+                return 0;
+
+        if (mode == CB_MODE_APPND)
+                n = TAILQ_FIRST(&src->cc_head);
+        else
+                n = TAILQ_LAST(&src->cc_head, cb_chain_head);
+
+        while (n) {
+                if (mode == CB_MODE_APPND) {
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== " __FUNCTION__ "(): appnd: %p: %p => %p\n", getpid(), n, src, dst);
+#endif
+                        n2 = TAILQ_NEXT(n, link);
+                        CB_DEL_NODE(src, n);
+                        CB_ADD_TO_TAIL(dst, n);
+
+                } else {
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== " __FUNCTION__ "(): prepend %p: %p => %p\n", getpid(), n, src, dst);
+#endif
+                        n2 = TAILQ_PREV(n, cb_chain_head, link);
+                        CB_DEL_NODE(src, n);
+                        CB_ADD_TO_HEAD(dst, n);
+                }
+                n = n2;
+        }
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: src = %s\n", getpid(), CHECK_CHAINBUF(src)?"!!!ERR!!!":"OK");
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: dst = %s\n", getpid(), CHECK_CHAINBUF(dst)?"!!!ERR!!!":"OK");
+#endif
+        return 0;
+}
+
+/*
+ * Copy SRC chainbuf to the end of DST chanibuf.
+ * FROM and TO specifies amount of data to copy from SRC.
+ */
+int
+cb_copy(cb_chain_s *dst, cb_chain_s *src, size_t from, size_t to)
+{
+        char *ptr;
+        size_t sz;
+
+        if (CHECK_CHAINBUF(dst))
+                CB_ERRNO_RET(EINVAL);
+        if (CHECK_CHAINBUF(src))
+                CB_ERRNO_RET(EINVAL);
+
+        while ((from < to) && (cb_get_pulluped(src, from, &ptr, &sz) == 0) && ptr)
+        {
+                if ((from + sz) > to)
+                        sz = to - from;
+                cb_append(dst, ptr, sz);
+                from += sz;
+        }
+        return 0;
+}
+
+/* 
+ * Place data at the beginning of CB
+ */
+int
+cb_prepend(cb_chain_s *chain, const void *data, size_t size)
+{
+        cb_node_s *n;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if (size == 0)
+                return 0;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_prepend(): %p: data size = %d; cbsize = %d\n", getpid(), chain, size, cb_size(chain));
+#endif
+
+        /* first check if any free space exists in fisrt chunk */
+        if ((chain->cc_flags & CB_F_ADD_EXACT) != CB_F_ADD_EXACT) {
+                n = TAILQ_FIRST(&chain->cc_head);
+                if (n != NULL) {
+                        register size_t sz = 0;
+                        register size_t freesz = 0;
+                        register size_t nodesz = 0;
+
+                        /* shift data in chunk only if this is interesting */
+                        nodesz = n->cn_lb - n->cn_fb;
+                        freesz = n->cn_size - nodesz; /* Look, how many free space in node */
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_prepend(): %p: found node %p: nodesz = %d; freesz = %d\n", 
+                                getpid(), chain, n, nodesz, freesz);
+#endif
+                        if (freesz && nodesz < CB_ALLOW_COPY_SIZE) {
+#ifdef CHAINBUF_VERBOSE
+                                fprintf(stderr, "%d=== cb_prepend(): %p: moving content in %p: from %d to %d position: total %d bytes\n", 
+                                        getpid(), chain, n, n->cn_fb, freesz, nodesz);
+#endif
+                                DMEMCPY(n->cn_data + freesz, n->cn_data + n->cn_fb, nodesz);
+                                n->cn_fb = freesz; 
+                                n->cn_lb = freesz + nodesz;
+                        }
+
+                        /* now prepend part of data to this chunk */
+                        sz = (n->cn_fb < size) ? n->cn_fb : size;
+                        if (sz > 0) {
+#ifdef CHAINBUF_VERBOSE
+                                fprintf(stderr, "%d=== cb_prepend(): %p: placing data in %p: from %d total %d bytes\n", 
+                                        getpid(), chain, n, n->cn_fb - sz, sz);
+#endif
+
+                                if (data != NULL)
+                                        DMEMCPY(n->cn_data + n->cn_fb - sz, data + size - sz, sz);
+                                else if ((chain->cc_flags & CB_F_ZERO_NODES) == 1)
+                                        DMEMSET(n->cn_data + n->cn_fb - sz, 0, sz);
+                                n->cn_fb -= sz;
+                                size -= sz;
+                                chain->cc_total += sz;
+                        }
+                }
+
+                if (size == 0)
+                        return 0;
+        }
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_prepend(): %p: still have data %d bytes; placing in new node\n", 
+                getpid(), chain, size);
+#endif
+        n = new_node(data, size, chain->cc_flags);
+        if (n == NULL)
+                goto fail;
+
+        CB_ADD_TO_HEAD(chain, n);
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(chain)?"!!!ERR!!!":"OK");
+#endif
+
+        return 0;
+fail:
+        return -1;
+}
+
+/*
+ * Allocate space at the end of CB. Return pointer on that buffer in dptr. 
+ * Dptr can be NULL
+ */
+int
+cb_extend(cb_chain_s *chain, size_t amount, char **dptr)
+{
+        register size_t tailsz;
+        register cb_node_s *n;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if ((chain->cc_flags & CB_F_ADD_EXACT) != CB_F_ADD_EXACT) {
+                n = TAILQ_LAST(&chain->cc_head, cb_chain_head);
+                if (dptr) {
+                        if (n != NULL)
+                                *dptr = n->cn_data + n->cn_lb;
+                        else
+                                *dptr = NULL;
+                }
+
+                if (amount == 0)
+                        goto done;
+
+                if (n != NULL) {
+                        tailsz = n->cn_size - n->cn_lb;
+
+                        if (tailsz >= amount) {
+                                if (chain->cc_flags & CB_F_ZERO_NODES)
+                                        DMEMSET(n->cn_data + n->cn_lb, 0, amount);
+
+                                n->cn_lb += amount;
+                                chain->cc_total += amount;
+                                goto done;
+                        }
+                } 
+        }
+
+        n = new_node(NULL, amount, chain->cc_flags);
+        if (n == NULL)
+                return -1;
+
+        CB_ADD_TO_TAIL(chain, n);
+        if (dptr)
+                *dptr = n->cn_data;
+
+done:
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(chain)?"!!!ERR!!!":"OK");
+#endif
+
+        return 0;
+}
+
+/*
+ * Truncate AMOUNT of data from the tail of the CB
+ */
+int
+cb_truncate(cb_chain_s *dst, cb_chain_s *src, size_t amount)
+{
+        cb_node_s *n;
+        int err;
+        size_t to;
+        register size_t togo, nsz, from;
+
+        if (CHECK_CHAINBUF(src))
+                CB_ERRNO_RET(EINVAL);
+
+        if (dst && CHECK_CHAINBUF(dst))
+                CB_ERRNO_RET(EINVAL);
+
+        if (amount > src->cc_total)
+                CB_ERRNO_RET(ESPIPE);
+
+        togo = amount;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_truncate %p => %p: truncating %d bytes\n", getpid(), src, dst, togo);
+#endif
+
+        while(togo) {
+                n = TAILQ_LAST(&src->cc_head, cb_chain_head);
+                nsz = n->cn_lb - n->cn_fb;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_truncate %p => %p: found node %d bytes\n", getpid(), src, dst, nsz);
+#endif
+
+                if (nsz <= togo) {
+                        /* node is fully truncated */
+                        CB_DEL_NODE(src, n);
+                        if (dst)
+                                CB_ADD_TO_TAIL(dst, n);
+                        else 
+                                free_node(n);
+                        togo -= nsz;
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_truncate %p => %p: fulldel node %d bytes: togo = %d\n", getpid(), src, dst, nsz, togo);
+#endif
+                } else {
+                        /* node is partialy truncated */
+                        from = nsz - togo;
+                        to   = nsz;
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_truncate %p => %p: partial node %d bytes: from = %d, to = %d\n", 
+                                getpid(), src, dst, n->cn_lb - n->cn_fb, from, to);
+#endif
+                        err = cutnjoin(dst, src, n, from, &to);
+                        if (err != 0)
+                                return err;
+                        /* now all done, bail out */
+                        break;
+                }
+        }
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: src = %s\n", getpid(), CHECK_CHAINBUF(src)?"!!!ERR!!!":"OK");
+        if (dst)
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: dst = %s\n", getpid(), CHECK_CHAINBUF(dst)?"!!!ERR!!!":"OK");
+#endif
+
+        return 0;
+}
+
+/*
+ * Allow to access data in CB. 
+ * Joins nodes if needed. Garantee that DPTR will point on continues 
+ * memory of (FROM - TO) bytes.
+ */
+int
+cb_pullup(cb_chain_s *chain, size_t from, size_t to, char **dptr)
+{
+        register size_t csum, lsum, off;
+        size_t pullsz;
+        cb_node_s *n, *nt;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if (to < from || (to - from) == 0) 
+                CB_ERRNO_RET(ESPIPE);
+
+        if (from >= chain->cc_total || to > chain->cc_total)
+                CB_ERRNO_RET(E2BIG);
+
+        if (dptr)
+                *dptr = NULL;
+
+        csum = 0;
+        pullsz = to - from;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_pullup %p: from = %d; to = %d: chainsz = %d chainnodes = %d\n", 
+                getpid(), chain, from, to, cb_size(chain), chain->cc_nodes);
+/*      print_cb(chain); */
+#endif
+
+        lsum = 0;
+        /* find first node */
+        TAILQ_FOREACH(n, &chain->cc_head, link) {
+                lsum = n->cn_lb - n->cn_fb;
+                if (csum + lsum > from)
+                        break;
+                csum += lsum;
+        }
+
+        if (csum + lsum >= to) {
+                /* if we already have continius memory, simple return */
+                if (dptr)
+                        *dptr = n->cn_data + n->cn_fb + from - csum;
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_pullup %p: have continues memory: %d(csum) + %d(lsum) >= (%d)to\n", 
+                        getpid(), chain, csum, lsum, to);
+#endif
+                return 0;
+        }
+
+        /* Get offset in current node */
+        off = from - csum;
+
+        {
+                cb_node_s *nn;
+                register size_t hsz, nsz;
+                /* Get avaiable size in current node */
+                nsz = n->cn_size - n->cn_lb;
+
+                /* Get amount of data in current node */
+                hsz = lsum - off;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_pullup %p: off = %d; pullsz = %d, nsz = %d, hsz = %d\n", 
+                        getpid(), chain, off, pullsz, nsz, hsz);
+#endif
+
+                if (nsz >= pullsz - hsz) {
+
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_pullup %p: nsz >= pullsz - hsz: %d >= %d - %d\n", 
+                                getpid(), chain, nsz, pullsz, hsz);
+#endif
+
+                        pullsz -= hsz; /* Subtract already pulluped data size in current node */
+                        csum = 0;
+                        while (pullsz > 0) {
+                                nt = TAILQ_NEXT(n, link);
+/*                              if (nt == NULL) */
+/*                                      return -1; */
+#ifdef CHAINBUF_VERBOSE
+                                if (nt == NULL) 
+                                        fprintf(stderr, "%d=== cb_pullup %p: NULL node returned for TAILQ_NEXT\n", getpid(), chain);
+#endif
+
+                                /* Move data from next node */
+                                lsum = nt->cn_lb - nt->cn_fb;
+                                if (lsum > pullsz) {
+#ifdef CHAINBUF_VERBOSE
+                                        fprintf(stderr, "%d=== cb_pullup %p: node moved partialy: %d bytes\n", getpid(), chain, pullsz);
+#endif
+                                        DMEMCPY(n->cn_data + n->cn_lb, nt->cn_data + nt->cn_fb, pullsz);
+                                        n->cn_lb += pullsz;
+                                        nt->cn_fb += pullsz;
+                                        break;
+                                } else {
+                                        DMEMCPY(n->cn_data + n->cn_lb, nt->cn_data + nt->cn_fb, lsum);
+                                        nt->cn_fb += lsum;
+                                        n->cn_lb += lsum;
+#ifdef CHAINBUF_VERBOSE
+                                        fprintf(stderr, "%d=== cb_pullup %p: full node moved: %d bytes\n", getpid(), chain, lsum);
+#endif
+                                        CB_DEL_NODE(chain, nt);
+                                        DFREE(nt);
+                                }
+                                pullsz -= lsum;
+                        }
+                        if (dptr)
+                                *dptr = n->cn_data + n->cn_fb + from - csum;
+                        goto done;
+                }
+
+                nn = new_node2(n->cn_data + n->cn_fb + off, hsz, pullsz, chain->cc_flags);
+                if (nn == NULL)
+                        return -1;
+                if (dptr)
+                        *dptr = nn->cn_data;
+
+                pullsz -= hsz;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_pullup %p: created new node %p: off = %d, hsz = %d, pullsz = %d\n", 
+                        getpid(), chain, nn, off, hsz, pullsz);
+#endif
+
+                CB_INS_AFTER(chain, n, nn);
+
+                if (hsz == lsum) {
+                        CB_DEL_NODE(chain, n);
+                        DFREE(n);
+                } else {
+                        chain->cc_total -= hsz;
+                        n->cn_lb -= hsz;
+                }
+
+                n = nn;
+        }
+
+        while (pullsz > 0) {
+                nt = TAILQ_NEXT(n, link);
+                /* Move data from next node */
+                lsum = nt->cn_lb - nt->cn_fb;
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_pullup %p: checking node %p\n", getpid(), chain, nt);
+#endif
+                if (lsum > pullsz) {
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_pullup %p: node moved partialy: %d bytes\n", getpid(), chain, pullsz);
+#endif
+                        DMEMCPY(n->cn_data + n->cn_lb, nt->cn_data + nt->cn_fb, pullsz);
+                        n->cn_lb += pullsz;
+                        nt->cn_fb += pullsz;
+                        break;
+                } else {
+                        DMEMCPY(n->cn_data + n->cn_lb, nt->cn_data + nt->cn_fb, lsum);
+                        n->cn_lb += lsum;
+                        nt->cn_fb += lsum;
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cb_pullup %p: full node moved: %d bytes\n", getpid(), chain, lsum);
+#endif
+                        CB_DEL_NODE(chain, nt);
+                        DFREE(nt);
+                }
+                pullsz -= lsum;
+        }
+
+done:
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(chain)?"!!!ERR!!!":"OK");
+#endif
+        return 0;
+}
+
+/*
+ * Wrapper around pullup. Some people prefers this function
+ */
+char *
+cb_tod(cb_chain_s *cbc)
+{
+        char *rptr;
+        if (cb_pullup(cbc, 0, cb_size(cbc), &rptr))
+                return NULL;
+
+        return (rptr);
+}
+
+/* 
+ * Make C-style string from CB. Garatee '\0' at the end of the CB
+ */
+char *
+cb_tostr(cb_chain_s *cbc)
+{
+        cb_node_s *n;
+        char *rval;
+
+        if (CHECK_CHAINBUF(cbc))
+                CB_ERRNO_RETNULL(EINVAL);
+
+
+        if (TAILQ_EMPTY(&cbc->cc_head))
+                return NULL;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_tostr(): %p\n", getpid(), cbc);
+#endif
+
+        /* For strings we are always pullup to full size, and reserve
+         * 1 byte at eof buffer
+         */
+        if (TAILQ_FIRST(&cbc->cc_head) != TAILQ_LAST(&cbc->cc_head, cb_chain_head)) {
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_tostr(): %p more than 1 nodes\n", getpid(), cbc);
+#endif
+
+                cb_append(cbc, "\0", 1); /* XXX: Apped 1 zero byte, pullup and cut it off */
+                if (cb_pullup(cbc, 0, cb_size(cbc), NULL))
+                        return NULL;
+                n = TAILQ_LAST(&cbc->cc_head, cb_chain_head);
+                n->cn_lb--;
+                cbc->cc_total--;
+                return n->cn_data + n->cn_fb;
+        }
+
+        n = TAILQ_FIRST(&cbc->cc_head);
+        if (n->cn_lb == n->cn_size) {
+                /* No room, create bigger node */
+                cb_node_s *nn;
+                size_t pullsz;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_tostr(): %p 1 node, but small: lb = %d, size = %d\n", 
+                        getpid(), cbc, n->cn_lb, n->cn_size);
+#endif
+
+                /* Here we have one node, check, it size and if necessary, replace with new bigger node */
+                pullsz = n->cn_lb - n->cn_fb;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cb_tostr(): %p pullsz = %d\n", getpid(), cbc, pullsz);
+#endif
+
+                nn = new_node2(n->cn_data + n->cn_fb, pullsz, pullsz + 1, cbc->cc_flags);
+                CB_DEL_NODE(cbc, n);
+                CB_ADD_TO_TAIL(cbc, nn);
+                ((char *)nn->cn_data)[n->cn_lb] = '\0';
+                return (char *)(nn->cn_data) + nn->cn_fb;
+        }
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cb_tostr(): %p 1 node, and enought room: lb = %d, size = %d\n", 
+                getpid(), cbc, n->cn_lb, n->cn_size);
+#endif
+
+        ((char *)n->cn_data)[n->cn_lb] = '\0';
+        rval = (char *)(n->cn_data) + n->cn_fb;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(cbc)?"!!!ERR!!!":"OK");
+#endif
+        return rval;
+}
+
+
+/* 
+ * Allow to iterate over all CB nodes. Used for non pullup
+ * CB traversal (for send() f.e.)
+ */
+int
+cb_get_pulluped(cb_chain_s *chain, size_t from, char **dptr, size_t *sz)
+{
+        register size_t csum, lsum;
+        cb_node_s *n;
+        static char stbuf[1];
+
+        *dptr = NULL;
+
+        if (CHECK_CHAINBUF(chain) || sz == NULL)
+                CB_ERRNO_RET(EINVAL);
+
+        if (from >= chain->cc_total)
+                CB_ERRNO_RET(E2BIG);
+
+        if (TAILQ_EMPTY(&chain->cc_head)) {
+                *sz = 0;
+                if (dptr)
+                        *dptr = NULL;
+                return 0;
+        }
+
+        csum = 0;
+        lsum = 0;
+        /* find first node */
+        TAILQ_FOREACH(n, &chain->cc_head, link) {
+                lsum = n->cn_lb - n->cn_fb;
+                if (csum + lsum > from)
+                        break;
+                csum += lsum;
+        }
+
+        from -= csum;
+
+        *sz = lsum - from;
+        if (dptr) {
+                if (n)
+                        *dptr = n->cn_data + n->cn_fb + from;
+                else 
+                        *dptr = stbuf; /* XXX if chain is empty return something */
+        }
+        return 0;
+}
+
+/* cuts chunks and appends them to dst chain (if dst is not null) */
+int
+cb_cut(cb_chain_s *dst, cb_chain_s *src, size_t from, size_t to)
+{
+        int err;
+        cb_node_s *n;
+        size_t cutsz, csum, lsum;
+
+
+
+        if (CHECK_CHAINBUF(src))
+                return NULL;
+
+        if (dst && CHECK_CHAINBUF(dst))
+                return NULL;
+
+        if (to < from)
+                CB_ERRNO_RET(EINVAL);
+
+        if (from >= src->cc_total || to > src->cc_total)
+                CB_ERRNO_RET(E2BIG);
+
+        cutsz = to - from;
+        if (cutsz == 0)
+                return 0;
+
+        csum = 0;
+        lsum = 0;
+        /* find first node */
+        TAILQ_FOREACH(n, &src->cc_head, link) {
+                lsum = n->cn_lb - n->cn_fb;
+                if (csum + lsum > from)
+                        break;
+                csum += lsum;
+        }
+
+        /* now csum have accumulated size of all previous nodes 
+         * and lsum have size of current node, so we can fix 
+         * 'from' and 'to' in such way, that they will be relative
+         * to current node
+         */
+        from -= csum;
+        to -= csum;
+
+        while(n && to != 0) {
+                register cb_node_s *svnode;
+
+                svnode = TAILQ_NEXT(n, link);
+                err = cutnjoin(dst, src, n, from, &to);
+                if (err != 0)
+                        return err;
+                n = svnode;
+                if (from > 0)
+                        from = 0; /* XXX 
+                                   * all next chunks from first must cutted from 
+                                   * first byte of chunk 
+                                   */
+        }
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: src = %s\n", getpid(), CHECK_CHAINBUF(src)?"!!!ERR!!!":"OK");
+        if (dst)
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: dst = %s\n", getpid(), CHECK_CHAINBUF(dst)?"!!!ERR!!!":"OK");
+#endif
+
+        return 0;
+}
+
+int
+cb_strchr(cb_chain_s *chain, char ch)
+{
+        cb_node_s *n;
+        register char *ptr, *eptr;
+        size_t lsum, msum;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        lsum = 0;
+        msum = 0;
+        TAILQ_FOREACH(n, &chain->cc_head, link) {
+
+                msum = 0;
+                ptr = n->cn_data + n->cn_fb;
+                eptr = n->cn_data + n->cn_lb;
+                while (*ptr != ch && ptr < eptr) {
+                        ptr++;
+                        msum++;
+                }
+
+                /* On match, return position of ch in buffer */
+                if (*ptr == ch)
+                        return lsum + msum; 
+                lsum += n->cn_lb - n->cn_fb;
+        }
+        return -1;
+}
+
+int
+cb_strstr(cb_chain_s *chain, size_t spos, const char *str)
+{
+        cb_node_s *n;
+        register char *ptr, *eptr;
+        size_t  msum = 0, csum = 0;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if (spos > ((size_t)-1)/2 || chain->cc_total > ((size_t)-1)/2)
+                CB_ERRNO_RET(E2BIG);
+
+        if (spos > 0) {
+                /* find first node */
+                size_t lsum = 0;
+
+                TAILQ_FOREACH(n, &chain->cc_head, link) {
+                        lsum = n->cn_lb - n->cn_fb;
+                        if (csum + lsum > spos)
+                                break;
+                        csum += lsum;
+                }
+                spos -= csum;
+        } else 
+                n = TAILQ_FIRST(&chain->cc_head);
+
+        while (n) {
+                ptr = n->cn_data + n->cn_fb + spos;
+                eptr = n->cn_data + n->cn_lb;
+
+                spos = 0; /* spos used only for first
+                           * encounter... next nodes will be scanned
+                           * from the start */
+
+        next:
+                while (*ptr != *str && ptr < eptr)
+                        ptr++;
+
+                if (*ptr == *str) { /* First char match */
+                        cb_node_s *nf;
+                        register char *lptr, *leptr;
+                        register const char *lstr;
+
+                        lstr = str;
+                        nf = n;
+                        lptr = ptr;
+                        leptr = nf->cn_data + nf->cn_lb;
+
+                        do {
+                                while (lptr < leptr) {
+                                        /* Matched */
+                                        if (*lstr == '\0')
+                                                break;
+
+                                        /* Mismatch, restart from next symbol */
+                                        if (*lptr++ != *lstr++) {
+                                                ptr++; /* prepare for next */
+                                                goto next;
+                                        }
+                                }
+
+                                if (*lstr == '\0') {
+                                        /* Fix amount of scanned buffer */
+                                        msum += ptr - (char *)(n->cn_data + n->cn_fb); 
+                                        goto found;
+                                }
+
+                                /* Advance to next node */
+                                nf = TAILQ_NEXT(nf, link);
+                                if (nf) {
+                                        lptr = nf->cn_data + nf->cn_fb;
+                                        leptr = nf->cn_data + nf->cn_lb;
+                                }
+                                if (*lstr == '\0')
+                                        goto found;
+                        } while(nf);
+                        /* Not any accurance found */
+                        goto nfound;
+                } else
+                        msum += (n->cn_lb - n->cn_fb); /* Fix amount of scanned buffer */
+
+                n = TAILQ_NEXT(n, link);
+        }
+nfound:
+        return -1;
+
+found:
+        if (csum + msum > (size_t)-1)
+                return -1;
+
+        return csum + msum;
+}
+
+float
+cb_avg_load(cb_chain_s *chain)
+{
+        float load = 0.0;
+        cb_node_s *n;
+        size_t lsum;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        TAILQ_FOREACH(n, &chain->cc_head, link) {
+                lsum = n->cn_lb - n->cn_fb;
+                load += (float)lsum / (float)n->cn_size;
+        }
+        load /= chain->cc_nodes;
+        return load;
+}
+
+int
+cb_check(cb_chain_s *chain)
+{
+        return CHECK_CHAINBUF(chain);
+}
+
+#ifdef DEBUG
+static int
+chk_integrity(cb_chain_s *chain, const char *file, const char *func, int line)
+{
+        int    ncnt;
+        size_t sum;
+        size_t nodesz;
+        cb_node_s *n;
+
+        if (chain == NULL)
+                return -1;
+
+        if (chain->cc_magic != CB_CHAIN_MAGIC) {
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: Invalid MAGIC: %x, should be %x !!!\n",
+                        getpid(), chain, file, func, line,
+                        chain->cc_magic, CB_CHAIN_MAGIC);
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                return -1;
+        }
+
+        ncnt = 0;
+        sum = 0;
+        TAILQ_FOREACH(n, &chain->cc_head, link) {
+                ncnt++;
+                if ((void *)n->cn_data - (void *)n > sizeof(cb_node_s)) {
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: node N%d %p data begins at %d, should be %d !!!\n",
+                                getpid(), chain, file, func, line,
+                                ncnt, n, (void *)n->cn_data - (void *)n, sizeof(cb_node_s));
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                        abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                        return -1;
+                }
+
+                if (n->cn_fb > n->cn_size) {
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: node N%d %p first byte out of bounds: %u, max is %u !!!\n",
+                                getpid(), chain, file, func, line,
+                                ncnt, n, n->cn_fb, n->cn_size);
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                        abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                        return -1;
+                }
+                if (n->cn_lb > n->cn_size) {
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: node N%d %p last byte out of bounds: %u, max is %u !!!\n",
+                                getpid(), chain, file, func, line,
+                                ncnt, n, n->cn_lb, n->cn_size);
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                        abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                        return -1;
+                }
+
+                nodesz = n->cn_lb - n->cn_fb;
+                sum += nodesz;
+                if (sum > chain->cc_total) {
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        fprintf(stderr, "%d=== " __FUNCTION__ 
+                                "(): %p: %s:%s at %d: at node N%d %p total greater then declared: %u, should be %u\n",
+                                getpid(), chain, file, func, line,
+                                ncnt, n, sum, chain->cc_total);
+                        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                        abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                        return -1;
+                }
+        }
+        if (sum != chain->cc_total) {
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: total sum mismatch: %u, should be %u\n",
+                        getpid(), chain, file, func, line,
+                        sum, chain->cc_total);
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                return -1;
+        }
+        if (ncnt != chain->cc_nodes) {
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): %p: %s:%s at %d: total nodes count mismatch: %u, should be %u\n",
+                        getpid(), chain, file, func, line,
+                        ncnt, chain->cc_nodes);
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+                return -1;
+        }
+        return 0;
+}
+#endif
+
+
+#ifdef CHAINBUF_VERBOSE
+static cb_node_s *
+new_node_(const void *data, size_t size, int flags, char *file, char *func, int line)
+#else
+static cb_node_s *
+new_node(const void *data, size_t size, int flags)
+#endif
+{
+        cb_node_s *np;
+        register size_t msize;
+
+        msize = CB_PAGE(CB_PAGE_SHIFT, size + sizeof(cb_node_s));
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== new_node(): %s:%s at %d: size = %d, msize = %d, flags = %d\n",
+                getpid(), file, func, line,
+                size, msize, flags);
+#endif
+        np = DMALLOC(msize, cb_node_s *);
+        if (np == NULL)
+                return NULL;
+        np->cn_flags = 0;
+        np->cn_fb   = 0;
+        np->cn_lb   = 0;
+        np->cn_data = ((void *)np) + sizeof(cb_node_s);
+        np->cn_size = msize - sizeof(cb_node_s);
+
+        if (size > 0) {
+                if ( data != NULL)
+                        DMEMCPY(np->cn_data, data, size);
+                np->cn_lb = size;
+        }
+
+        return np;
+}
+
+#ifdef CHAINBUF_VERBOSE
+static cb_node_s *
+new_node2_(const void *data, size_t size, size_t rsize, int flags, char *file, char *func, int line)
+#else
+static cb_node_s *
+new_node2(const void *data, size_t size, size_t rsize, int flags)
+#endif
+{
+        cb_node_s *np;
+        register size_t msize;
+
+        msize = CB_PAGE(CB_PAGE_SHIFT, rsize + sizeof(cb_node_s));
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== new_node2: %s:%s at %d: size = %d, rsize = %d, msize = %d, flags = %d\n",
+                getpid(), file, func, line,
+                size, rsize, msize, flags);
+#endif
+
+        np = DMALLOC(msize, cb_node_s *);
+        if (np == NULL)
+                return NULL;
+        np->cn_flags = 0;
+        np->cn_fb   = 0;
+        np->cn_lb   = 0;
+        np->cn_data = ((void *)np) + sizeof(cb_node_s);
+        np->cn_size = msize - sizeof(cb_node_s);
+
+        if (size > 0) {
+                if (data != NULL)
+                        DMEMCPY(np->cn_data, data, (size > np->cn_size) ? np->cn_size : size);
+                np->cn_lb = size;
+        }
+
+        return np;
+}
+
+#ifdef DEBUG
+static void
+free_node_(cb_node_s *n, const char *file, const char *func, int line)
+#else 
+static void
+free_node(cb_node_s *n)
+#endif
+{
+/*      DMEMSET(n, 0, sizeof(cb_node_s)); */
+#ifdef DEBUG
+        if (n->cn_flags & CB_NODE_F_INLIST){
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                fprintf(stderr, "%d=== " __FUNCTION__ "(): %s:%s at %d: Freeing node %p, but it still in list\n",
+                        getpid(), file, func, line, n);
+                fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        }
+#endif
+
+        DFREE(n);
+}
+
+/* internal cut and join funciton.
+ *
+ * Warnings: 
+ *     nodes can be removed from list, so be carefull with *_FOREACH
+ */
+static int 
+cutnjoin(cb_chain_s *dst, cb_chain_s *src, cb_node_s *node, size_t lfrom, size_t *to)
+{
+        size_t cutsz, cutoff;
+        size_t headsz, headoff;
+        size_t tailsz, tailoff;
+        size_t nodesz, lto;
+
+        lto = *to;
+
+        nodesz = node->cn_lb - node->cn_fb;
+        if (lto > nodesz)
+                lto = nodesz;
+
+        *to -= lto; /* consume cutted amount of data */
+
+        cutsz = lto - lfrom;
+        if (cutsz == 0)
+                return 0;
+
+        tailsz = nodesz - lto;
+        headsz = nodesz - cutsz - tailsz;
+
+        headoff = node->cn_fb;
+        cutoff = headoff + headsz;
+        tailoff = cutoff + cutsz;
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== cutnjoin %p => %p: headsz = %d, tailsz = %d, headoff = %d, cutoff = %d, tailoff = %d\n",
+                getpid(), src, dst, headsz, tailsz, headoff, cutoff, tailoff);
+#endif
+
+        /*
+         * Cutting scheme:
+         *
+         *      size    |<----->|
+         *      cutting |xxxxxxx|
+         *      node    |-------|
+         *
+         *                |<------------nodesz------------->|
+         *                                     |<--tailsz-->|
+         *                           |<-cutsz->|
+         *                |<-headsz->|
+         *
+         *    |<------------tailoff----------->|
+         *    |<-------cutoff------->|
+         *    |<-headoff->|
+         *
+         *    *-----------|----------|xxxxxxxxx|------------|-------*
+         *   cn_data    cb_fb                              cn_lb   cn_size
+         *    
+         */
+
+        if (tailsz == 0 && headsz == 0) {
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cutnjoin %p => %p: headsz = tailsz = 0\n",
+                        getpid(), src, dst, headsz, tailsz);
+#endif
+                CB_DEL_NODE(src, node);
+                if (dst)
+                        CB_ADD_TO_TAIL(dst, node);
+                else 
+                        free_node(node);
+        } else if (tailsz + headsz < cutsz) {
+                /* Reminder is less then cutted part */
+                register cb_node_s *nprev, *nnext;
+
+                nprev = TAILQ_PREV(node, cb_chain_head, link);
+                nnext = TAILQ_NEXT(node, link);
+
+                /* Remove node before anything to do. 
+                 * Now cb_size is decreased. All new updates and
+                 * inserts must update src->cc_total */
+                CB_DEL_NODE(src, node);
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cutnjoin %p => %p: reminder less then cutted: %d+%d < %d: nprev=%p, nnext=%p, lastsz = %d\n",
+                        getpid(), src, dst, headsz , tailsz , cutsz, nprev, nnext, src->cc_total);
+#endif
+
+                /* Try to place data in previous node as much as possible */
+                if (nprev) {
+                        register size_t nprevsz = nprev->cn_size - nprev->cn_lb;
+                        register size_t tocopy;
+
+                        tocopy = (nprevsz > headsz) ? headsz : nprevsz;
+                        if (tocopy > 0) {
+                                /* copy head reminder to previous node */
+                                DMEMCPY(nprev->cn_data + nprev->cn_lb, node->cn_data + headoff, tocopy);
+                                nprevsz -= tocopy;
+                                headsz -= tocopy;
+                                headoff += tocopy;
+                                /* increase lb pointer on prev node */
+                                nprev->cn_lb += tocopy;
+                                src->cc_total += tocopy; /* XXX: Update chain total size */
+
+                                /* if some place still exists in prev node, try to place tail here */
+                                if (nprevsz) {
+                                        tocopy = (nprevsz > tailsz) ? tailsz : nprevsz;
+                                        if (tocopy > 0) {
+                                                DMEMCPY(nprev->cn_data + nprev->cn_lb, node->cn_data + tailoff, tocopy);
+                                                nprevsz -= tocopy;
+                                                tailsz -= tocopy;
+                                                tailoff += tocopy;
+                                                nprev->cn_lb += tocopy;
+                                                src->cc_total += tocopy; /* XXX: Update chain total size */
+                                        }
+                                }
+                        }
+                }
+
+                /* If all reminder copied, no need further work */
+                if (headsz == 0 && tailsz == 0)
+                        goto docut1;
+
+                /* Try to place data in next node as much as possible */
+                if (nnext) {
+                        register size_t nnextsz = nnext->cn_fb;
+                        register size_t tocopy;
+
+                        tocopy = (nnextsz > tailsz) ? tailsz : nnextsz;
+
+                        if (tocopy > 0) {
+                                /* copy tail reminder to next node */
+                                DMEMCPY(nnext->cn_data + nnext->cn_fb - tocopy , node->cn_data + tailoff + tailsz - tocopy, tocopy);
+                                nnextsz -= tocopy;
+                                tailsz -= tocopy;
+                                nnext->cn_fb -= tocopy;
+                                src->cc_total += tocopy; /* XXX: Update chain total size */
+
+                                /* if some place still exists in next node, place head here */
+                                if (nnextsz) {
+                                        tocopy = (nnextsz > headsz) ? headsz : nnextsz;
+                                        if (tocopy > 0) {
+                                                DMEMCPY(nnext->cn_data + nnext->cn_fb - tocopy, 
+                                                       node->cn_data + headoff + headsz - tocopy, 
+                                                       tocopy);
+                                                nnextsz -= tocopy;
+                                                headsz -= tocopy;
+                                                nnext->cn_fb -= tocopy;
+                                                src->cc_total += tocopy; /* XXX: Update chain total size */
+                                        }
+                                }
+                        }
+                }
+
+        docut1:
+                /* If still something to copy, create new node */
+                if (headsz != 0 || tailsz != 0) {
+                        register size_t off, sz;
+                        cb_node_s *nn;
+
+#ifdef CHAINBUF_VERBOSE
+                        fprintf(stderr, "%d=== cutnjoin %p => %p: placing in new node: %d bytes: headoff = %d, tailoff = %d\n", 
+                                getpid(), src, dst, headsz + tailsz, headoff, tailoff);
+#endif
+
+                        off = (headsz > 0) ? headoff : tailoff;
+                        sz = (headsz > 0) ? headsz : tailsz;
+
+                        nn = new_node2(node->cn_data + off, sz, headsz + tailsz, src->cc_flags);
+                        if (nn == NULL)
+                                return -1;
+                        /* Shift reminder, if it exists */
+                        if (headsz != 0 && tailsz != 0) {
+                                DMEMCPY(nn->cn_data + nn->cn_lb, node->cn_data + tailoff, tailsz);
+                                nn->cn_lb += tailsz;
+                        }
+                        /* Hmm... we'r removed our original node, so insert before nnext
+                         * or directly at tail */
+                        if (nnext)
+                                CB_INS_BEFORE(src, nnext, nn);
+                        else
+                                CB_ADD_TO_TAIL(src, nn);
+                }
+
+                /* Fixup all internal params of splitted node */
+                tailsz = nodesz - lto;
+                headsz = nodesz - cutsz - tailsz;
+                node->cn_fb += headsz;
+                node->cn_lb -= tailsz;
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cutnjoin %p => %p: original node %p: %d bytes\n", 
+                        getpid(), src, dst, node, node? (node->cn_lb - node->cn_fb):0);
+#endif
+
+                if (dst) {
+                        CB_ADD_TO_TAIL(dst, node);
+                } else {
+                        free_node(node);
+                }
+        } else {
+                /* Cutted part placed in new chunk */
+
+#ifdef CHAINBUF_VERBOSE
+                fprintf(stderr, "%d=== cutnjoin %p => %p: cutting to new node\n", getpid(), src, dst);
+#endif
+
+                if (dst) {
+                        cb_node_s *nn;
+                        nn = new_node(node->cn_data + cutoff, cutsz, dst->cc_flags);
+                        if (nn == NULL)
+                                return -1;
+                        CB_ADD_TO_TAIL(dst, nn);
+                }
+
+                /* XXX 
+                 * I think that is more wisely split node if it too big 
+                 */
+
+                if ((src->cc_flags & CB_F_ALLOW_SPLIT) && tailsz > CB_ALLOW_COPY_SIZE && headsz > CB_ALLOW_COPY_SIZE) {
+                        /* completely split node on two parts and free original node */
+                        cb_node_s *nn;
+
+                        if (headsz > 0) {
+                                nn = new_node(node->cn_data + headoff, headsz, src->cc_flags);
+                                CB_INS_BEFORE(src, node, nn);
+                        }
+                        if (tailsz > 0) {
+                                nn = new_node(node->cn_data + tailoff, tailsz, src->cc_flags);
+                                CB_INS_BEFORE(src, node, nn);
+                        }
+                        CB_DEL_NODE(src, node);
+                        free_node(node);
+                } else {
+                        /* some simple way, if none above applied, simple move less part to bigger part */
+
+                        if (tailsz > headsz) {
+                                if (headsz)
+                                        DMEMCPY(node->cn_data + tailoff - headsz, node->cn_data + headoff, headsz);
+                                node->cn_fb = tailoff - headsz;
+                        } else {
+                                if (tailsz)
+                                        DMEMCPY(node->cn_data + cutoff, node->cn_data + tailoff, tailsz);
+                                node->cn_lb = cutoff + tailsz;
+                        }
+                        /* fix chain length */
+                        src->cc_total -= cutsz;
+                }
+        }
+
+        return 0;
+}
+
+
+
+/*
+ * Code from FreeBSD 4.5 libc
+ *
+ * Macros for converting digits to letters and vice versa
+ */
+#define to_digit(c)     ((c) - '0')
+#define is_digit(c)     ((unsigned)to_digit(c) <= 9)
+#define to_char(n)      ((n) + '0')
+
+#define FL_LONGINT      0x1
+#define FL_QUADINT      0x2
+#define FL_SHRTINT      0x4
+#define FL_ZEROPAD      0x8
+#define FL_ALTNOTA      0x10
+#define FL_HAVEPREC     0x20
+#define FL_RJUSTIFY     0x40
+#define FL_EXACT        0x80 /* '=' flags define to exact length in prec */
+
+/*
+ * To extend shorts properly, we need both signed and unsigned
+ * argument extraction methods.
+ */
+#define SARG()                                                  \
+        (flags&FL_LONGINT ? va_arg(ap, long) :                  \
+            flags&FL_SHRTINT ? (long)(short)va_arg(ap, int) :   \
+            (long)va_arg(ap, int))
+
+#define UARG()                                                          \
+        (flags&FL_LONGINT ? va_arg(ap, u_long) :                        \
+            flags&FL_SHRTINT ? (u_long)(u_short)va_arg(ap, int) :       \
+            (u_long)va_arg(ap, u_int))
+
+
+#define u_long_t unsigned long
+#define u_quad_t unsigned long long
+
+static char *xdigs_uc = "0123456789ABCDEF";
+static char *xdigs_lc = "0123456789abcdef";
+
+/*
+ * Convert an unsigned long to ASCII for printf purposes, returning
+ * a pointer to the first character of the string representation.
+ * Hex numbers use the given digits.
+ */
+static char *
+__ultoa(u_long val, char *endp, int base, char *xdigs)
+{
+        register char *cp = endp;
+        register long sval;
+
+        /*
+         * Handle the three cases separately, in the hope of getting
+         * better/faster code.
+         */
+        switch (base) {
+        case 10:
+                if (val < 10) { /* many numbers are 1 digit */
+                        *--cp = to_char(val);
+                        return (cp);
+                }
+                /*
+                 * On many machines, unsigned arithmetic is harder than
+                 * signed arithmetic, so we do at most one unsigned mod and
+                 * divide; this is sufficient to reduce the range of
+                 * the incoming value to where signed arithmetic works.
+                 */
+                if (val > LONG_MAX) {
+                        *--cp = to_char(val % 10);
+                        sval = val / 10;
+                } else
+                        sval = val;
+                do {
+                        *--cp = to_char(sval % 10);
+                        sval /= 10;
+                } while (sval != 0);
+                break;
+
+        case 16:
+                do {
+                        *--cp = xdigs[val & 15];
+                        val >>= 4;
+                } while (val);
+                break;
+
+        default:                        /* oops */
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+        }
+        return (cp);
+}
+
+/* Identical to __ultoa, but for quads. */
+static char *
+__uqtoa(u_quad_t val, char *endp, int base, char *xdigs)
+{
+        char *cp = endp;
+        quad_t sval;
+
+        /* quick test for small values; __ultoa is typically much faster */
+        /* (perhaps instead we should run until small, then call __ultoa?) */
+        if (val <= ULONG_MAX)
+                return (__ultoa((u_long)val, endp, base, xdigs));
+        switch (base) {
+        case 10:
+                if (val < 10) {
+                        *--cp = to_char(val % 10);
+                        return (cp);
+                }
+                if (val > QUAD_MAX) {
+                        *--cp = to_char(val % 10);
+                        sval = val / 10;
+                } else
+                        sval = val;
+                do {
+                        *--cp = to_char(sval % 10);
+                        sval /= 10;
+                } while (sval != 0);
+                break;
+
+        case 16:
+                do {
+                        *--cp = xdigs[val & 15];
+                        val >>= 4;
+                } while (val);
+                break;
+
+        default:
+#ifdef CHAINBUF_ABORT_ON_ERROR
+                abort();
+#endif /* CHAINBUF_ABORT_ON_ERROR */
+        }
+        return (cp);
+}
+
+int
+cb_strfmt(cb_chain_s *chain, int mode, const char *fmt, ...)
+{
+        int err;
+        va_list ap;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        va_start(ap, fmt);
+        err = cb_sprintf_int(chain, mode, fmt, ap);
+        va_end(ap);
+
+
+        return err;
+}
+
+int
+cb_vstrfmt(cb_chain_s *chain, int mode, const char *fmt, va_list ap)
+{
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        return cb_sprintf_int(chain, mode, fmt, ap);
+}
+
+
+/* 
+ * Light version of snprintf 
+ */
+static int
+cb_sprintf_int(cb_chain_s *cb, int mode, const char *fmt,  va_list ap)
+{
+#define CB_MAXPRNPARAM 128
+        char sprn[CB_MAXPRNPARAM+1];
+        char *pfmt;
+        int  err, base;
+
+        int  flags;
+        char sign;
+
+        char *addptr;
+        int   addsz;
+        int   prec;
+
+        char    *hextable;
+        u_long_t ulval;
+        u_quad_t uqval;
+        char     chval;
+
+        struct cb_chain tcb;
+
+
+        if (CHECK_CHAINBUF(cb))
+                CB_ERRNO_RET(EINVAL);
+
+        CB_INIT(&tcb);
+
+        while (*fmt) {
+                /* check for param */
+                pfmt = strchr(fmt, '%');
+                if (pfmt != NULL) {
+                        cb_append(&tcb, fmt, pfmt-fmt);
+                        fmt = pfmt;
+                }else{
+                        cb_append(&tcb, fmt, strlen(fmt));
+                        break;
+                }
+                /* check for ``%%'', and skip it */
+
+                sprn[CB_MAXPRNPARAM]='\0';
+                addptr = sprn + CB_MAXPRNPARAM;
+                addsz = 0;
+
+                prec  = 0;
+                uqval = 0;
+                ulval = 0;
+                flags = 0;
+                sign = '\0';
+                base = 0;
+                hextable = xdigs_lc;
+        rflag:
+                pfmt++;
+                /* handle various types */
+                switch(*pfmt) {
+                case '%':
+                        addptr = "%";
+                        addsz = 1;
+                        break;
+                case '#':
+                        flags |= FL_ALTNOTA;
+                        goto rflag;
+                case '+':
+                        sign = '+';
+                        goto rflag;
+                case '0':
+                        flags |= FL_ZEROPAD;
+                        goto rflag;
+                case '.':
+                        flags |= FL_RJUSTIFY;
+                        goto rflag;
+                case '=':
+                        flags |= FL_EXACT;
+                        goto rflag;
+                case '1': case '2': case '3': case '4':
+                case '5': case '6': case '7': case '8': case '9':
+                        prec = 0;
+                        do
+                                prec = 10 * prec + to_digit(*pfmt++);
+                        while (is_digit(*pfmt));
+                        flags |= FL_HAVEPREC;
+                        pfmt--;
+                        goto rflag;
+                case 'q':
+                        flags |= FL_QUADINT;
+                        goto rflag;
+                case 'h':
+                        flags |= FL_SHRTINT;
+                        goto rflag;
+                case 'l':
+                        if (flags & FL_LONGINT)
+                                flags |= FL_QUADINT;
+                        else
+                                flags |= FL_LONGINT;
+                        goto rflag;
+                case 'u':
+                        if (flags & FL_QUADINT) 
+                                uqval = va_arg(ap, quad_t);
+                        else
+                                ulval = UARG();
+                        base = 10;
+                        goto nucber;
+                case 'D':
+                        flags |= FL_LONGINT;
+                case 'd':
+                case 'i':
+                        if (flags & FL_QUADINT) {
+                                uqval = va_arg(ap, quad_t);
+                                if ((quad_t)uqval < 0) {
+                                        uqval = -uqval;
+                                        sign = '-';
+                                }
+                        } else {
+                                ulval = SARG();
+                                if ((long)ulval < 0) {
+                                        ulval = -ulval;
+                                        sign = '-';
+                                }
+                        }
+                        base = 10;
+                        goto nucber;
+                case 'p':
+                        flags &= ~FL_QUADINT;
+                        flags |= FL_ALTNOTA;
+                        goto hexnucber;
+                case 'X':
+                        hextable = xdigs_uc;
+                case 'x':
+                hexnucber:
+                        if (flags & FL_QUADINT) {
+                                uqval = va_arg(ap, quad_t);
+                        } else {
+                                ulval = UARG();
+                        }
+                        base = 16;
+                        /* for hex values use exact representation */
+                        flags |= FL_EXACT;
+                nucber:
+                        if (flags & FL_QUADINT)
+                                addptr = __uqtoa(uqval, sprn + CB_MAXPRNPARAM, base, hextable);
+                        else
+                                addptr = __ultoa(ulval, sprn + CB_MAXPRNPARAM, base, hextable);
+
+                        addsz =  sprn + CB_MAXPRNPARAM - addptr;
+                        if (prec > CB_MAXPRNPARAM)
+                                prec = CB_MAXPRNPARAM;
+                        break;
+                case 'c':
+                        flags &= ~FL_EXACT;
+/*                      flags &= ~FL_ZEROPAD; */
+/*                      flags &= ~FL_HAVEPREC; */
+                        chval = SARG();
+                        addptr = &chval;
+                        addsz = 1;
+                        break;
+                case 's':
+                        /* for safe operations disable zeropadding and exact*/
+                        flags &= ~FL_ZEROPAD;
+                        flags &= ~FL_EXACT;
+                        addptr = va_arg(ap, char *);
+                        if (addptr == NULL) {
+                                addptr = "(null)";
+                                addsz = 6;
+                        }
+
+                        if (flags & FL_HAVEPREC) {
+                                register size_t i;
+                                register char *p;
+                                p = addptr;
+                                for (i = 0; i < prec; i++) {
+                                        if (p[i] == '\0')
+                                                break;
+                                }
+                                if ( i > prec ) {
+                                        addsz = prec;
+                                        flags &= ~FL_HAVEPREC;
+                                } else {
+                                        addsz = i;
+                                }
+                        } else
+                                addsz = strlen(addptr);
+                        sign='\0';
+                        break;
+                default:
+                        if (*pfmt == '\0')
+                                goto done;
+                        flags &= ~FL_EXACT;
+/*                      flags &= ~FL_ZEROPAD; */
+/*                      flags &= ~FL_HAVEPREC; */
+                        chval = *pfmt;
+                        addptr = &chval;
+                        addsz = 1;
+                        break;
+                }
+
+
+                if ((flags & FL_HAVEPREC) != 0) {
+                        if (addsz > prec && (flags & FL_EXACT) != 0) {
+                                if ((flags & (FL_ZEROPAD | FL_RJUSTIFY)) != 0) {
+                                        register size_t dlen = addsz - prec;
+                                        addptr += dlen;
+                                        addsz -= dlen;
+                                } else {
+                                        addsz = prec;
+                                }
+                        } else if (prec > addsz) {
+                                register size_t dlen = prec - addsz;
+                                if ((flags & FL_ZEROPAD) != 0)
+                                        while(dlen--)
+                                                cb_append(&tcb, "0", 1);
+                                else if ((flags & FL_RJUSTIFY) != 0)
+                                        while(dlen--)
+                                                cb_append(&tcb, " ", 1);
+                        }
+                }
+
+                /* do some additional formatting */
+                if (base == 16 && (flags & FL_ALTNOTA)) {
+                        addptr -= 2;
+                        addsz +=  2;
+                        *addptr = '0';
+                        *(addptr+1) = 'x';
+                }
+
+                if (base == 10 && sign != '\0') {
+                        addptr--;
+                        addsz++;
+                        *addptr = sign;
+                }
+
+                err = cb_append(&tcb, addptr, addsz);
+                if (err != 0) {
+                        CB_FREE(&tcb);
+                        return err;
+                }
+
+                pfmt++;
+                fmt = pfmt;
+        }
+done:
+        cb_move(cb, &tcb, mode);
+        CB_FREE(&tcb);
+
+#ifdef CHAINBUF_VERBOSE
+        fprintf(stderr, "%d=== " __FUNCTION__ "(): checking integrity: chain = %s\n", getpid(), CHECK_CHAINBUF(cb)?"!!!ERR!!!":"OK");
+#endif
+
+        return 0;
+#undef CB_MAXFMTPARAM
+#undef CB_MAXPRNPARAM
+}
+
+/*
+ * Bitwise operations. 
+ */
+int
+cb_set_bit(cb_chain_s *chain, size_t pos, int val)
+{
+        size_t octpos  = pos >> 3;
+        u_int8_t *bptr;
+        size_t bytebitidx;
+        size_t psz;
+        int rc;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        psz = cb_size(chain);
+
+        if (psz < octpos + 1) {
+
+                rc = cb_extend(chain, octpos - psz + 1, (char **)&bptr);
+                if (rc != 0)
+                        return rc;
+
+                DMEMSET(bptr, 0, octpos - psz + 1);
+        }
+
+        rc = cb_pullup(chain, octpos, octpos + 1, (char **)&bptr);
+        if (rc != 0)
+                return rc;
+
+        bytebitidx = 7 - (pos & 0x7);
+        if (val)
+                *bptr |= (0x1 << bytebitidx);
+        else
+                *bptr &= ~(0x1 << bytebitidx);
+
+        return 0;
+}
+
+int
+cb_isset_bit(cb_chain_s *chain, size_t pos)
+{
+        size_t octpos  = pos >> 3;
+        u_int8_t *bptr;
+        size_t bytebitidx;
+        int rc;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        if (chain->cc_total < octpos + 1)
+                return 0;
+
+        rc = cb_pullup(chain, octpos, octpos + 1, (char **) &bptr);
+        if (rc != 0)
+                return rc;
+
+        bytebitidx = 7 - (pos & 0x7);
+        return ((*bptr) & (0x1 << bytebitidx)) >> bytebitidx ;
+}
+
+
+int
+cb_compact_bits(cb_chain_s *chain)
+{
+        int pos, rc;
+
+        if (CHECK_CHAINBUF(chain))
+                CB_ERRNO_RET(EINVAL);
+
+        pos = chain->cc_total * 8;
+
+        while (pos && (cb_isset_bit(chain, pos) == 0))
+                pos--;
+
+        if (pos)
+                rc = cb_cut(NULL, chain, pos/8 + 1, chain->cc_total);
+        else
+                rc = 0;
+
+        return rc;
+}
+ 

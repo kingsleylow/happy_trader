@@ -1,0 +1,128 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"          
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd
+      http://www.springframework.org/schema/mvc 
+      http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+      http://www.springframework.org/schema/util 
+      http://www.springframework.org/schema/util/spring-util.xsd"> 
+
+  
+    <!-- Scan for components under this package -->
+    <context:component-scan base-package="com.mtrunner.client.auth" />
+    <mvc:annotation-driven />
+    <context:annotation-config />   
+ 
+    <global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"></global-method-security>
+    
+    <!--
+    <http create-session="stateless" pattern="/accdt/**" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
+                
+        <intercept-url pattern="/accdt/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+        <custom-filter ref="restServicesFilter" after="PRE_AUTH_FILTER" />
+    </http>
+    -->
+    
+     <!-- no filter -->
+    <!--
+    <http pattern="service/**" security="none">
+    </http>
+    -->
+    
+    <http create-session="stateless" use-expressions="true" entry-point-ref="adminAuthenticationEntryPoint">
+               
+        
+        <intercept-url pattern="/accdt/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+        <intercept-url pattern="/account/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/administration/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/company/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/server/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/setup/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/user/**" access="hasRole('ROLE_ADMIN')" />
+        
+        <!--
+        <custom-filter ref="adminServicesFilter" after="PRE_AUTH_FILTER" />
+        -->
+        
+        
+        <custom-filter ref="requireVerificationFilterChain" after="PRE_AUTH_FILTER" />
+        
+        
+        <access-denied-handler ref="adminAccessAccessDeniedHandler" />
+    </http>
+    
+    
+    <beans:bean id="requireVerificationFilterChain" class="org.springframework.security.web.FilterChainProxy">
+        
+        <filter-chain-map request-matcher="ant">
+            <filter-chain pattern="/accdt/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/account/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/administration/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/company/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/server/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/setup/**" filters="adminServicesFilter"/>
+            <filter-chain pattern="/user/**" filters="adminServicesFilter"/>
+        </filter-chain-map>
+        
+    </beans:bean>
+    
+   
+    
+     <beans:bean id="adminAuthenticationEntryPoint"  class="com.mtrunner.client.auth.entrypoint.AdminAuthenticationEntryPoint">
+        <beans:property name="errorPage" value="service/admin401.html" />
+    </beans:bean>
+    
+    <beans:bean id="adminAccessAccessDeniedHandler"  class="com.mtrunner.client.auth.handlers.AdminAccessAccessDeniedHandler">
+        <beans:property name="errorPage" value="service/admin403.html" />
+    </beans:bean>
+        
+    <beans:bean id="adminServicesFilter" class="com.mtrunner.client.auth.filters.AdminUsernamePasswordAuthenticationFilter">
+        <beans:property name="postOnly" value="false" />
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationSuccessHandler" ref="adminAuthenticationSuccessHandler" />
+        <beans:property name="authenticationFailureHandler" ref="adminAuthenticationFailureHandler" />
+        
+    </beans:bean>
+  
+    
+    <authentication-manager alias="authenticationManager" erase-credentials="false">
+        <!--
+            <authentication-provider user-service-ref="userService" ref="customAuthenticationProvider" />
+        -->
+        <authentication-provider ref="customAuthenticationProvider" />
+    </authentication-manager>
+
+
+    <beans:bean id="propertyConfigurerJoomla" 
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"  >
+        <beans:property name="locations">
+            <beans:list>
+                <beans:value>/WEB-INF/jdbc.properties</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </beans:bean>
+    
+    
+    <beans:bean id="dataSourceJoomla" class="org.apache.commons.dbcp.BasicDataSource" 
+          destroy-method="close"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.databaseurljoomla}" p:username="${jdbc.username}"
+          p:password="${jdbc.password}" />
+   
+    <beans:bean id="JoomlaDBUtil"  class="com.mtrunner.client.auth.JoomlaDBUtil" factory-method="getInstance" lazy-init="false" scope="singleton">
+	<beans:property name="db" ref="dataSourceJoomla" />
+        <beans:property name="tprfx" value="${jdbc.databasejoomla.table.prefix}" />
+        <beans:property name="sessionTimeOut" value="${jdbc.joomla.session.tout}" />
+    </beans:bean>
+    
+</beans:beans>

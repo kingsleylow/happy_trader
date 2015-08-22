@@ -1,0 +1,159 @@
+// smartcom_proxy2.idl : IDL source for smartcom_proxy2
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (smartcom_proxy2.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(DEDF458D-7AFB-495D-9B96-D9AAEE2992C4),
+	helpstring("IMainSmartComEngineCallback Interface"),
+	pointer_default(unique)
+]
+interface IMainSmartComEngineCallback : IUnknown{
+	[id(1), helpstring("method onOrderSucceded")] HRESULT onOrderSucceded(
+		[in] long cookie, 
+		[in] BSTR symbol,
+		[in] long state,
+		[in] long action,
+		[in] long type,
+		[in] long validity,
+		[in] double price,
+		[in] double amount,
+		[in] double stop,
+		[in] double filled,
+		[in] double datetime,
+		[in] BSTR orderid,
+		[in] BSTR orderno
+	);
+
+	[id(2), helpstring("method onOrderFailed")] HRESULT onOrderFailed([in]long cookie, [in]BSTR orderid, [in]BSTR reason);
+	[id(3), helpstring("method onConnect")] HRESULT onConnect();
+	[id(4), helpstring("method onDisconnect")] HRESULT onDisconnect([in] BSTR reason);
+	[id(5), helpstring("method onAddTrade")] HRESULT onAddTrade(
+		[in] long cookie, 
+		[in] BSTR portfolio,
+		[in] BSTR symbol,
+		[in] BSTR orderno,
+		[in] BSTR orderid,
+		[in] double price,
+		[in] double amount,
+		[in] double datetime,
+		[in] BSTR tradeno
+	);
+
+	[id(6), helpstring("method onSetMyTrade")] HRESULT onSetMyTrade(
+		[in] BSTR portfolio, 
+		[in] BSTR symbol, 
+    [in] double datetime, 
+    [in] double price, 
+    [in] double volume, 
+    [in] BSTR tradeno, 
+		[in] long buysell, 
+    [in] BSTR orderno,
+		[in] BSTR orderid
+	);
+
+	[id(7), helpstring("method onFinishBarsHistory")] HRESULT onFinishBarsHistory(
+		[in] int cookie,
+		[in] BSTR symbol,
+		[in] VARIANT_BOOL result,
+		[in] long count,
+		[in] IDispatch* eventClientPtr
+
+	);
+
+	[id(8), helpstring("method onTimer_1Sec")] HRESULT onTimer_1Sec();
+};
+
+
+[
+	object,
+	uuid(44670410-F00B-42E6-BFD0-278D54262FD9),
+	dual,
+	nonextensible,
+	helpstring("IMainSmartComEngine Interface"),
+	pointer_default(unique)
+]
+interface IMainSmartComEngine : IDispatch{
+	[id(1), helpstring("method libInit")] HRESULT libInit([in]IMainSmartComEngineCallback* eventClient, [out] long* cookie);
+	[id(2), helpstring("method libDeinit")] HRESULT libDeinit([in] long cookie);
+	[id(3), helpstring("method connect")] HRESULT connect(
+		[in] BSTR rtProvider, 
+		[in] BSTR rtProviderBarPostfix,
+		[in] VARIANT_BOOL accompanyTicks1minBar,
+		[in]BSTR host, 
+		[in]SHORT port, 
+		[in]BSTR login, 
+		[in]BSTR password,
+		[in]SAFEARRAY(VARIANT) portfolioList,
+		[in]long loglevel
+	);
+
+	[id(4), helpstring("method subscribeForTicks")] HRESULT subscribeForTicks([in]SAFEARRAY(VARIANT) symbols);
+	[id(5), helpstring("method subscribeForTicks")] HRESULT unsubscribeForTicks([in]SAFEARRAY(VARIANT) symbols);
+	[id(6), helpstring("method querySymbols")] HRESULT querySymbols(void);
+	[id(7), helpstring("method disconnect")] HRESULT disconnect(void);
+	[id(8), helpstring("method getPrintHistory")] HRESULT getPrintHistory([in]SAFEARRAY(VARIANT) symbols, [in]DATE from_date, [in] long from_count);
+	[id(9), helpstring("method subscribeForTicks")] HRESULT subscribeForLevel1([in]SAFEARRAY(VARIANT) symbols);
+	[id(10), helpstring("method subscribeForTicks")] HRESULT unsubscribeForLevel1([in]SAFEARRAY(VARIANT) symbols);
+	[id(11), helpstring("method getPortfolioList")] HRESULT getPortfolioList();
+	[id(12), helpstring("method issueOrder")] HRESULT issueOrder(
+		[in] BSTR portfolio,
+		[in] BSTR symbol,
+		[in] int order_action,
+		[in] int order_type,
+		[in] int validity,
+		[in] double price,
+		[in] double amount,
+		[in] double stop,
+		[in] long cookie,
+		[in] IMainSmartComEngineCallback* eventClient
+	);
+
+	[id(13), helpstring("method checkConnectStatus")] HRESULT checkConnectStatus(void);
+	[id(14), helpstring("method cancelOrder")] HRESULT cancelOrder([in] BSTR portfolio, [in] BSTR symbol, [in] BSTR orderId, [in] long cookie, [in] IMainSmartComEngineCallback* eventClient);
+	[id(15), helpstring("method cancelOrder")] HRESULT cancelAllOrders( [in] long cookie, [in] IMainSmartComEngineCallback* eventClient);
+	[id(16), helpstring("method getBarsHistory")] HRESULT getBarsHistory([in]BSTR symbol, [in] int interval, [in]DATE from_date, [in] long from_count, [in] int cookie);
+	[id(17), helpstring("method subscribeForLevel2")] HRESULT subscribeForLevel2([in]SAFEARRAY(VARIANT) symbols);
+	[id(18), helpstring("method unsubscribeForLevel2")] HRESULT unsubscribeForLevel2([in]SAFEARRAY(VARIANT) symbols);
+	[id(19), helpstring("method getMyTradesOnce")] HRESULT getMyTradesOnce();
+	[id(20), helpstring("method subscribeGetMyTrades")] HRESULT subscribeGetMyTrades([in] long pollPeriodSec);
+	[id(21), helpstring("method unsubscribeGetMyTrades")] HRESULT unsubscribeGetMyTrades();
+
+};
+
+
+
+
+
+[
+	uuid(42519A4B-1067-4F08-B350-433156AE50D6),
+	version(1.0),
+	helpstring("smartcom_proxy2 1.0 Type Library")
+]
+library smartcom_proxy2Lib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(149C2130-0832-47D4-A0D8-EE141D31C6B9),
+		helpstring("MainSmartComEngine Class")
+	]
+	coclass MainSmartComEngine
+	{
+		[default] interface IMainSmartComEngine;
+	};
+
+	
+	[
+		uuid(ED10803B-9E22-4C0C-B859-52C6E862BE41),
+		helpstring("MainSmartComEngineCallback Class")
+	]
+	coclass MainSmartComEngineCallback
+	{
+		[default] interface IMainSmartComEngineCallback;
+	};
+};

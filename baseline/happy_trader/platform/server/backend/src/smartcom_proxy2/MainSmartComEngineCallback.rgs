@@ -1,0 +1,25 @@
+HKCR
+{
+	smartcom_proxy2.MainSmartComEngineCal.1 = s 'MainSmartComEngineCallback Class'
+	{
+		CLSID = s '{ED10803B-9E22-4C0C-B859-52C6E862BE41}'
+	}
+	smartcom_proxy2.MainSmartComEngineCallb = s 'MainSmartComEngineCallback Class'
+	{
+		CLSID = s '{ED10803B-9E22-4C0C-B859-52C6E862BE41}'
+		CurVer = s 'smartcom_proxy2.MainSmartComEngineCal.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {ED10803B-9E22-4C0C-B859-52C6E862BE41} = s 'MainSmartComEngineCallback Class'
+		{
+			ProgID = s 'smartcom_proxy2.MainSmartComEngineCal.1'
+			VersionIndependentProgID = s 'smartcom_proxy2.MainSmartComEngineCallb'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{42519A4B-1067-4F08-B350-433156AE50D6}'
+		}
+	}
+}

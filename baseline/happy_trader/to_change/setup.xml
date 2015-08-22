@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XML Spy v3.5 NT (http://www.xmlspy.com) by Matthias Hansen (Dell Computers Corporation) -->
+<entries>
+	<happytrader>
+		<happyTraderUrl>http://localhost:8084/HtMTBridgeProcessorHistory</happyTraderUrl>
+
+		<!-- install\center\server\clientapp\common.properties ( edit common.happyTraderUrl, user, password) -->
+		<happyTraderUser>admin</happyTraderUser>
+		
+		<!-- install\center\server\clientapp\common.properties ( edit common.happyTraderUrl, user, password) -->
+		<happyTraderPassword>admin</happyTraderPassword>
+		
+
+		<!-- install\center\server\supp\user_data.cmd ( edit MYSQL_CONNECTION_URL )-->
+		<!-- install\center\server\clientapp\clientrepo.war\WEB-INF\jdbc.properties (edit databaseurl, username, password) -->
+		<mysqluser>root</mysqluser>
+
+		<!-- install\center\server\supp\user_data.cmd ( edit MYSQL_CONNECTION_URL )-->
+		<!-- install\center\server\clientapp\clientrepo.war\WEB-INF\jdbc.properties (edit databaseurl, username, password) -->
+		<mysqlpassword>HJGDSQJH7ff2</mysqlpassword>
+
+		<mysqlport>3306</mysqlport>
+		
+		<mysqlhost>localhost</mysqlhost>
+		
+		<!-- install\center\server\supp\user_data.cmd ( edit JAVA_MEMORY_PARAM )-->
+		<htraderjavamemory>-Xmx512m</htraderjavamemory>
+		
+		<!-- install\center\server\supp\user_data.cmd ( JAVA_HOME )-->
+		<javahome>c:\Program Files (x86)\Java\jdk1.7.0_71\</javahome>
+
+		<!-- install\center\server\supp\user_data.cmd ( HT_DEBUG_LEVEL )-->
+		<htdebuglevel>5</htdebuglevel>
+		
+		<!-- install\center\server\supp\user_data.cmd ( HT_CLIENT_DEBUG_LEVEL )-->
+		<htclientdebuglevel>INFO</htclientdebuglevel>
+
+		<!-- install\center\server\supp\user_data.cmd ( WINSTONE_DEBUG_LEVEL )-->
+		<winstonedebuglevel>INFO</winstonedebuglevel>
+	</happytrader>
+	<endclient>
+		<!-- MySQL details for end client-->
+		<mysqluserec>root</mysqluserec>
+		
+		<mysqlpasswordec>HJGDSQJH7ff2</mysqlpasswordec>
+
+		<mysqlportec>3306</mysqlportec>
+		
+		<mysqlhostec>localhost</mysqlhostec>
+
+		<!-- install\center\server\clientapp\common.properties ( edit common.historyPositionsPageSize) -->
+		<historyPositionsPageSize>2</historyPositionsPageSize>
+		
+	</endclient>
+</entries>

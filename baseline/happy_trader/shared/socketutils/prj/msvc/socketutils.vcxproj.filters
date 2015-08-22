@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f0a8c601-ce1a-449f-aef1-6f95f1d216c5}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\infra">
+      <UniqueIdentifier>{76debd2f-3f1f-4a42-80d2-85d8e7462b09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tcpip">
+      <UniqueIdentifier>{5364fdec-f0db-43b8-b9c2-a3bc9da1a36a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01963696-c22e-4882-9341-0281cfd71e80}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\infra">
+      <UniqueIdentifier>{da7a10da-ea3c-4399-8346-9869dc5771d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tcpip">
+      <UniqueIdentifier>{491b5e9c-60ca-48ac-9301-60f5acd934df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\CriticalAutoRelease.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\CriticalSectionForProtection.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ErrorHandler.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\FileLog.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericCriticalSection.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericEvent.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericMutex.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericReadWriteLock.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericSemaphore.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\GenericThread.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\LibConfig.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ManagedThread.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\MutexAutoRelease.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\OSManager.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\PeriodicThread.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\RWAutoRelease.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ScreenLog.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\StdAfx.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\ThreadPool.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\TraceLog.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitableObject.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitableObjectAutoRelease.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\WaitList.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32CriticalSection.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Event.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Mutex.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32ReadWriteLock.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Semaphore.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaInfraLib\Win32Thread.cpp">
+      <Filter>Source Files\infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\AsyncSocket.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\BlockedBuffer.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\Interfaces.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\Socket.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketBase.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketPool.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketPoolSocket.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketThreadManager.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\SocketThreadManagerImp.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\StdAfx.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocket.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsync.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsyncDelegator.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\UDPSocket.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\KomodiaTCPIPLib\UDPSocketAsync.cpp">
+      <Filter>Source Files\tcpip</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\socketmisc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\socketutils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\socketutilsdefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\CriticalAutoRelease.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\CriticalSectionForProtection.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\DebugHeap.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ErrorHandler.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ErrorHandlerMacros.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\FileLog.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericCriticalSection.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericEvent.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericMutex.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericReadWriteLock.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericSemaphore.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\GenericThread.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\KomodiaSettings.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\LibConfig.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ManagedThread.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\MutexAutoRelease.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\OSManager.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\PeriodicThread.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ResourceQueue.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ResourceQueueEvents.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\RWAutoRelease.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ScreenLog.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\StdAfx.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\ThreadPool.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\TraceLog.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitableObject.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitableObjectAutoRelease.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\WaitList.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32CriticalSection.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Event.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Mutex.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32ReadWriteLock.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Semaphore.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaInfraLib\Win32Thread.h">
+      <Filter>Header Files\infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Array_ptr.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\AsyncSocket.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\BlockedBuffer.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\ErrorRegister.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Interfaces.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\Socket.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketBase.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketPool.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketPoolSocket.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketThreadManager.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\SocketThreadManagerImp.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\StdAfx.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocket.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsync.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\TCPSocketAsyncDelegator.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UDPSocket.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UDPSocketAsync.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KomodiaTCPIPLib\UnixTypes.h">
+      <Filter>Header Files\tcpip</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

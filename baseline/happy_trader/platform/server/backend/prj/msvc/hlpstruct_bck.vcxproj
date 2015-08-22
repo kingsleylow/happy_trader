@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{40E2248C-0000-0000-0000-000000000000}</ProjectGuid>
+    <RootNamespace>hlpstruct_bck</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Debug\</OutDir>
+    <IntDir>.\../../obj/Debug/hlpstruct\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\..\lib\win32_i86\Release\</OutDir>
+    <IntDir>.\../../obj/Release/hlpstruct\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Debug/hlpstruct_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;HLPSTRUCT_BCK_EXPORTS;CPPUTILS_DLL;SERVICE_BACKEND_DLLS;HANDLE_NATIVE_EXCEPTIONS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Debug/hlpstruct/hlpstruct_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Debug/hlpstruct/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Debug/hlpstruct/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Debug/hlpstruct/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/FIXED:NO /VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>../../../lib/win32_i86/Debug/hthlpstruct_bck_d.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)/extern/lib/win32_i86/xerces;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Debug/hthlpstruct_bck_d.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Debug/hthlpstruct_bck_d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetFileName).embed.manifest</OutputManifestFile>
+    </Manifest>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\hthlpstruct_bck_d.dll                   ..\..\..\..\..\bin\win32_i86\Debug\
+rem copy                ..\..\..\..\extern\msvc\xerces-c-3.1.1\Build\Win32\VC10\Debug\xerces-c_3_1D.dll  ..\..\..\..\bin\win32_i86\Debug\
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\../../../lib/win32_i86/Release/hlpstruct_bck.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>$(HT_DEVEL_ROOT)/extern/include;$(HT_DEVEL_ROOT);$(HT_DEVEL_ROOT)\extern\msvc\xerces-c-3.1.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;HLPSTRUCT_BCK_EXPORTS;CPPUTILS_DLL;SERVICE_BACKEND_DLLS;HANDLE_NATIVE_EXCEPTIONS;_USE_32BIT_TIME_T;_BIND_TO_CURRENT_VCLIBS_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\../../obj/Release/hlpstruct/hlpstruct_bck.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\../../obj/Release/hlpstruct/</AssemblerListingLocation>
+      <ObjectFileName>.\../../obj/Release/hlpstruct/</ObjectFileName>
+      <ProgramDataBaseFileName>.\../../obj/Release/hlpstruct/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>../../../lib/win32_i86/Release/hthlpstruct_bck.dll</OutputFile>
+      <Version>2.1</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HT_DEVEL_ROOT)/extern/lib/win32_i86/sxl;$(HT_DEVEL_ROOT)/extern/lib/win32_i86/xerces;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ManifestFile>$(OutDir)$(TargetFileName).manifest</ManifestFile>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\../../../lib/win32_i86/Release/hthlpstruct_bck.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\../../../lib/win32_i86/Release/hthlpstruct_bck.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying DLL</Message>
+      <Command>copy                $(OutDir)\hthlpstruct_bck.dll                    ..\..\..\..\..\bin\win32_i86\Release\
+copy                $(OutDir)\hthlpstruct_bck.pdb               ..\..\..\..\..\bin\win32_i86\Release\
+rem copy                ..\..\..\..\extern\msvc\xerces-c-3.1.1\Build\Win32\VC10\Release\xerces-c_3_1.dll  ..\..\..\..\bin\win32_i86\Release\
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\hlpstruct\bootmgr.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\callcontext.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\commonhelperstructs.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\global.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\human_xmlparam_serializer.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\multcache.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\stringtable.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmldrawableobj.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmleventdata.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmllevel1data.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmllevel2data.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmlparameter.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmlrtdata.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmlrtdatadiskbuf.cpp" />
+    <ClCompile Include="..\..\src\hlpstruct\xmlwrap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\hlpstruct\bootmgr.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\callcontext.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\commonhelperstructs.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\contextdatahelper.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\global.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\globaldata.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\hlpstruct.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\hlpstructdefs.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\human_xmlparam_serializer.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\multcache.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\pricedata.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\proxybase.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\robotmanager.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\serializehelper.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\stringtable.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmldrawableobj.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmleventdata.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmllevel1data.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmllevel2data.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmlparameter.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmlrtdata.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmlrtdatadiskbuf.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\xmlwrap.hpp" />
+    <ClInclude Include="..\..\src\hlpstruct\json\elements.h" />
+    <ClInclude Include="..\..\src\hlpstruct\json\reader.h" />
+    <ClInclude Include="..\..\src\hlpstruct\json\visitor.h" />
+    <ClInclude Include="..\..\src\hlpstruct\json\writer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\hlpstruct\json\elements.inl" />
+    <None Include="..\..\src\hlpstruct\json\reader.inl" />
+    <None Include="..\..\src\hlpstruct\json\writer.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\extern\msvc\xerces-c-3.1.1\projects\Win32\VC9\xerces-all\XercesLib\XercesLib.vcxproj">
+      <Project>{152ce948-f659-4206-a50a-1d2b9658ef96}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\shared\cpputils\prj\msvc\cpputils.vcxproj">
+      <Project>{d1fe5551-dc06-4a78-b76d-5663458975df}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

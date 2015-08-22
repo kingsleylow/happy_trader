@@ -1,0 +1,7 @@
+
+EXPORTS
+	getVersion
+	getTerminalUid
+	saveFileContent
+	internallog
+	setloglevel

@@ -1,0 +1,5 @@
+#ifndef _SMARTCOMBROKERPROVIDER_INCLUDED
+#define _SMARTCOMBROKERPROVIDER_INCLUDED
+// Include all externally visible headers
+//
+#endif // _SMARTCOMBROKERPROVIDER_INCLUDED

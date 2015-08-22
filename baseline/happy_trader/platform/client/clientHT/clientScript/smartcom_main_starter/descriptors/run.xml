@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<descriptor>
+	<runnable>
+		<classes>
+			<class>
+				<name>
+					com.fin.httrader.externalapi.custom.Starter
+				</name>
+				<parameters>
+
+					<param>
+						<key>SMARTCOM_LOGIN</key><value>ST0027</value>
+					</param>
+
+					<param>
+						<key>SMARTCOM_PASSWORD</key><value>FFZTWX</value>
+					</param>
+
+					<param>
+						<key>SMARTCOM_HOST</key><value>62.141.86.229</value>
+					</param>
+
+					<param>
+						<key>SMARTCOM_PORT</key><value>8090</value>
+					</param>
+
+					<param>
+						<key>SMARTCOM_PORTFOLIO</key><value>ST0027-MS-01</value>
+					</param>
+
+					<param>
+						<key>IS_DEBUG_CONFIGURATION</key><value>false</value>
+					</param>
+
+					<param>
+						<key>RECREATE_ENTRIES</key><value>false</value>
+					</param>
+					
+					<param>
+						<key>SYMBOL_FILE</key><value>c:\work\German_work\in\symbols.txt</value>
+					</param>
+
+					<param>
+						<key>BASE_EXPORT_PATH</key><value>c:\work\German_work\out\export_smartcom\</value>
+					</param>
+					
+					<param>
+						<key>AUTO_START_TRADE</key><value>false</value>
+					</param>
+
+					<param>
+						<key>SHORT_SELL</key><value>true</value>
+					</param>
+
+
+
+				</parameters>
+			</class>
+		</classes>
+	</runnable>
+</descriptor>

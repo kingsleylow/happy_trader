@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{21b01dc2-31da-48b3-b2c3-608a0997e36e}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\cpputils Source Files">
+      <UniqueIdentifier>{e2354858-24b5-4ccd-96ab-a08e90d690e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cpputils Source Files\Sysdep Sources">
+      <UniqueIdentifier>{f6729530-992a-452a-a769-5dbbef31a3bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{66277708-f806-468d-bccf-cb025187c6da}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\cpputils Header Files">
+      <UniqueIdentifier>{fbfee2ea-ded8-44a5-ac7e-ba715cbc4001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpputils Header Files\Sysdep Headers">
+      <UniqueIdentifier>{d9337d99-a8ae-4337-a667-a4340f906570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT4">
+      <UniqueIdentifier>{a920e2b2-aa21-4834-94ed-053cc216117c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rapid XML Header Files">
+      <UniqueIdentifier>{72500b04-da48-470e-b8ce-2ac2db0bf7ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\mtproxy\mtproxy_bck.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\mtproxy\mtproxycore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\bootmgr.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\chunk.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\except.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\processmgr.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\refcounted.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\reference.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\rootobj.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\servicethread.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\signature.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\uid.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\value.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\config.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\config.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\dllmain.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\event.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\filelock.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\log.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\mutex.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\process.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\semaphore.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sharedres.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\sysdep.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\thread.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtproxy\mtproxymanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mtproxy\bootmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\md5_ht.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\misc_ht.cpp">
+      <Filter>Source Files\cpputils Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\msgboxtout.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.cpp">
+      <Filter>Source Files\cpputils Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\mtproxy\mtproxy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtproxy\mtproxycore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtproxy\mtproxydefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\assertdef.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\bootmgr.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\chunk.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\config.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputils.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\cpputilsdefs.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\event.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\except.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\filelock.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\functor.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\langdefs.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\log.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\mutex.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\process.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\processmgr.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\pywrapper.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\refcounted.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\reference.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\rootobj.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\semaphore.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\servicethread.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sharedres.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\signature.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\template.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\thread.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\uid.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\value.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\ddewrap.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\pipewrap.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\sysdep.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\system.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\system.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtproxy\mtproxymanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_iterators.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_print.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hlpstruct\rapidxml\rapidxml_utils.hpp">
+      <Filter>Header Files\Rapid XML Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mtproxy\bootmanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\md5_ht.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\misc_ht.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\msgboxtout.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\dataqueue.hpp">
+      <Filter>Header Files\cpputils Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\shared\cpputils\src\sysdep\win32\console.hpp">
+      <Filter>Header Files\cpputils Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\mtproxy\mt4\experts\scripts\mtht_export_engine.mq4">
+      <Filter>MT4</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

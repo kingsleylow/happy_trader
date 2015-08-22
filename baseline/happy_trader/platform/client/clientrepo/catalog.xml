@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/work/happy_trader/platform/client/clientrepo/../../server/backend/src/alglibmetatrader2/xsd/ht_settings.xsd" uri="src/conf/xml-resources/jaxb/hd_settings/ht_settings.xsd"/>
+</catalog>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<descriptor>
+	<runnable>
+		<classes>
+			<class>
+				<name>
+					com.fin.httrader.externalapi.custom.Starter2
+				</name>
+				<parameters>
+
+				</parameters>
+			</class>
+		</classes>
+	</runnable>
+</descriptor>

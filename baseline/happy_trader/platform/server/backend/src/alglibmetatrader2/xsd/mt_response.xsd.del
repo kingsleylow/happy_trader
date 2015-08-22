@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:st="http://www.foo.com" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="mtresponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="commandname" type="xs:string" />
+				<xs:element name="resultmessage" type="xs:string" />
+				<xs:element name="resultcode" type="xs:string" />
+				<xs:element name="data" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

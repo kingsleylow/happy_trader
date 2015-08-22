@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{29e0d2f8-7815-4600-9bfc-0a05719cc258}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Sysdep Sources">
+      <UniqueIdentifier>{fa1a1d69-9b81-49e4-b80a-8696c59442cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{26015b2b-6c20-4f55-bb90-7e3e6e44f3d7}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Sysdep Headers">
+      <UniqueIdentifier>{33d07634-7a29-4662-a21e-75e880bec39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{909404c2-bfeb-4720-87e6-343cca91c95a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\bootmgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\except.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\formulaparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\processmgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\refcounted.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reference.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rootobj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\servicethread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\statemachinehelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stringconcatenation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\config.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\config.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\ddeserverwrap.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\ddewrap.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\dllmain.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\event.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\filelock.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\inifilereader.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\log.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\mutex.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\pipewrap.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\process.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\semaphore.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\sharedres.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\signature.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\sysdep.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\thread.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\xltable.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\md5_ht.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\misc_ht.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\msgboxtout.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sysdep\win32\console.cpp">
+      <Filter>Source Files\Sysdep Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\assertdef.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\bimap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\bootmgr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\chunk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpputils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpputilsdefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\event.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\except.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fifoqueu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\filelock.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\formulaparser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\functor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\helpermacro.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\inifilereader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\langdefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\log.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mutex.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\process.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\processmgr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\refcounted.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reference.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\rootobj.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\semaphore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\servicethread.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sharedres.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\signature.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\statemachinehelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stringconcatenation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\template.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\thread.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uid.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\value.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\ddeserverwrap.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\ddewrap.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\mfthunk.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\pipewrap.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stdthunk.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\sysdep.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\system.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\system.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\UseMSPrivateAssemblies.h">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\xltable.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\md5_ht.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\misc_ht.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\msgboxtout.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dataqueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysdep\win32\console.hpp">
+      <Filter>Header Files\Sysdep Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

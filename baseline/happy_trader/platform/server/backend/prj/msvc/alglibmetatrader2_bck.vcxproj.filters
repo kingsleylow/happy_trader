@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\alglibmetatrader2\xsd\auto\soapC.cpp">
+      <Filter>soap\Soap Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\extern\tools\gsoap-2.8\gsoap\stdsoap2.cpp">
+      <Filter>soap\Soap Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\algorithmmt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\settingsmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtrunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtworkerthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\mtworkermanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alglibmetatrader2\ConsoleLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\alglibmetatrader2\xsd\auto\soapH.h">
+      <Filter>soap\Soap Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\xsd\auto\soapStub.h">
+      <Filter>soap\Soap Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\alglibmetatrader2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\alglibmetatrader2defs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\algorithmmt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\commonstruct.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_mt_request.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_mt_response.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packet_alglib_out.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packets_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\exchange_packets_mt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\shared.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\shared_defs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\settingsmanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtrunner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtworkerthread.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\mtworkermanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alglibmetatrader2\ConsoleLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\alglibmetatrader2\xsd\compile2.cmd">
+      <Filter>Source Files\xsd</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="soap">
+      <UniqueIdentifier>{26dd2893-0491-4b46-b3b8-ef87036af6d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="soap\Soap Header Files">
+      <UniqueIdentifier>{556bb54d-ed30-4b83-9394-98e8fcf6b29c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="soap\Soap Source Files">
+      <UniqueIdentifier>{154e5b65-a7a1-4cb5-9f3c-cdb8d4e0e324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2de98d92-cec1-4684-bc4c-b227d68533ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2aa8c8ed-40a2-4744-920d-b8a73c7ee9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xsd">
+      <UniqueIdentifier>{599ce69e-e965-4813-8a90-87355db87a2a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\alglibmetatrader2\xsd\auto\empty.nsmap">
+      <Filter>soap\Soap Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="..\..\src\alglibmetatrader2\xsd\ht_settings.xsd">
+      <Filter>Source Files\xsd</Filter>
+    </Xsd>
+  </ItemGroup>
+</Project>

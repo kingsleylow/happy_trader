@@ -1,0 +1,157 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource1.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOGMAIN DIALOGEX 0, 0, 467, 103
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_MINIMIZEBOX | 
+    WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_WINDOWEDGE
+CAPTION "HAPPY TRADER LASER API"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Custom_Control",IDC_CUSTOM_CAPTION,"GTSessionWindow",
+                    WS_TABSTOP,55,7,62,14
+    LTEXT           "API Version",IDC_STATIC,6,23,38,8
+    EDITTEXT        IDC_EDIT_API_VERSION,55,23,62,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    LTEXT           "Status",IDC_STATIC,6,7,22,8
+    LTEXT           "Executor status",IDC_STATIC,126,7,52,8
+    EDITTEXT        IDC_EDIT_API_EXEC_CONNECTED,181,7,125,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    LTEXT           "Quote status",IDC_STATIC,126,24,43,8
+    EDITTEXT        IDC_EDIT_API_QUOTE_CONNECTED,181,22,62,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_API_CHART_CONNECTED,181,37,125,12,
+                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "Level2 status",IDC_STATIC,126,54,44,8
+    LTEXT           "Chart status",IDC_STATIC,126,39,41,8
+    EDITTEXT        IDC_EDIT_API_LEVEL2_CONNECTED,181,51,125,12,
+                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_TICK_NUM,55,38,62,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    LTEXT           "Total quotes",IDC_STATIC,6,38,41,8
+    LTEXT           "Subscribed Symbols",IDC_STATIC,6,53,64,8
+    EDITTEXT        IDC_EDIT_SUBSCRIBED_SYMBOLS,71,53,45,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    CONTROL         "with LEVEL 1",IDC_CHECK_LEVEL1_SUBSCRIBED,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,249,23,56,10
+    EDITTEXT        IDC_EDIT_EXECUTOR_ADDR,312,7,81,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_QUOTE_ADDR,312,22,81,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_CHART_ADDR,312,37,81,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_LEVEL2_ADDR,312,51,81,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    GROUPBOX        "",IDC_STATIC,6,65,454,29
+    EDITTEXT        IDC_EDIT_EXECUTOR_ID,396,7,63,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_QUOTE_ID,396,22,63,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_CHART_ID,396,37,63,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDIT_LEVEL2_ID,395,51,64,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Reconnect",IDC_BUTTON_RECONNECT,13,74,50,14
+    CONTROL         "Enable looping on disconnect",IDC_LOOP_ENTRIES_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,73,75,108,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOGMAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 460
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 96
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource1.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

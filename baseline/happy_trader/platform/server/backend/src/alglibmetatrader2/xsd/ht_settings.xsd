@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:st="http://www.foo.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.foo.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="settings">
+		<xs:complexType>
+			<xs:sequence>
+
+				<xs:element name="mt4loglevel" type="xs:integer" />
+				<xs:element name="heartbeatjavahtsec" type="xs:integer" />
+				<xs:element name="mt4datareadintrvalsec" type="xs:integer" />
+				<xs:element name="zombiemt4killer" type="xs:integer" />
+				<xs:element name="mtinstances">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="instance">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="path" type="xs:string" />
+										<xs:element name="name" type="xs:string" />
+										<xs:element name="loadbalanced" type="xs:string" />
+										<xs:element name="autorecover" type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="autoinstall" type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="autoload" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="autoqueuerestore" type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="companyid" type="xs:string"/>
+
+										<xs:element name="mt_distrib" type="xs:string"/>
+										
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="generalparams">
+					<xs:complexType>
+						<xs:sequence>
+							
+							<xs:element name="htserver">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="debugconsole" type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="port" type="xs:integer" />
+										<xs:element name="internalloglevel" type="xs:integer" />
+										<xs:element name="eventlevel" type="xs:integer" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							
+							<xs:element name="eventpluginparams">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="entry">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="name" type="xs:string" />
+													<xs:element name="value" type="xs:string" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
