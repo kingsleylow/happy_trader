@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property name="runtime_classpath" refid="maven.compile.classpath"/>
+  <echo>Compiling JNDI classes...</echo>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/QuoteSerializer_C.h"/>
+    <arg value="com.fin.httrader.utils.win32.QuoteSerializer"/>
+  </exec>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtPowerEventDetector_C.h"/>
+    <arg value="com.fin.httrader.utils.win32.HtPowerEventDetector"/>
+  </exec>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtDDEServer_C.h"/>
+    <arg value="com.fin.httrader.utils.win32.HtDDEServer"/>
+  </exec>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/EUid_C.h"/>
+    <arg value="com.fin.httrader.utils.Uid"/>
+  </exec>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtQuikListener_C.h"/>
+    <arg value="com.fin.httrader.utils.win32.HtQuikListener"/>
+  </exec>
+  <exec executable="javah">
+    <arg value="-verbose"/>
+    <arg value="-cp"/>
+    <arg value="${runtime_classpath}"/>
+    <arg value="-o"/>
+    <arg value="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtSysUtils_C.h"/>
+    <arg value="com.fin.httrader.utils.win32.HtSysUtils"/>
+  </exec>
+  <copy todir="../../../server/backend/src/java_power_listener" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtPowerEventDetector_C.h" overwrite="true"></copy>
+  <copy todir="../../../server/backend/src/java_dde_server" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtDDEServer_C.h" overwrite="true"></copy>
+  <copy todir="../../../server/backend/src/java_uid" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/EUid_C.h" overwrite="true"></copy>
+  <copy todir="../../../server/backend/src/java_quik_receiver" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtQuikListener_C.h" overwrite="true"></copy>
+  <copy todir="../../../server/backend/src/java_quote_serializer" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/QuoteSerializer_C.h" overwrite="true"></copy>
+  <copy todir="../../../server/backend/src/java_sys_utils" verbose="true" file="C:\work\happy_trader\platform\client\clientHT\clientUI2\target/jndi/HtSysUtils_C.h" overwrite="true"></copy>
+</target>
+</project>

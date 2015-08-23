@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+  <tlib-version>1.0</tlib-version>
+    <short-name>ct</short-name>
+    <uri>/WEB-INF/customTag</uri>
+    
+    <tag>
+        <name>jqincl</name>
+        <tag-class>com.mtrunner.client.ctags.JQueryInclusionTag</tag-class>
+        <body-content>empty</body-content>
+        <info>JQuery inclusion tag</info>
+        <attribute>
+            <name>base</name>
+            <required>false</required>
+            <description>Base path tag</description>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>up</name>
+            <required>false</required>
+            <description>If go upper level</description>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>basepath</name>
+        <tag-class>com.mtrunner.client.ctags.BasePathTag</tag-class>
+        <body-content>empty</body-content>
+        <info>Base path tag</info>
+        <attribute>
+            <name>base</name>
+            <required>false</required>
+            <description>Base path tag</description>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+
+</taglib>

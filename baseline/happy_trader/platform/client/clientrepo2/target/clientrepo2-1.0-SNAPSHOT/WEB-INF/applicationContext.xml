@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/task 
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd" >
+
+    <task:annotation-driven />
+    <context:component-scan base-package="com.mtrunner.client.utils" />
+    <context:component-scan base-package="com.mtrunner.client.managers" />
+   
+    <bean id="demoServiceBasicUsageFixedDelay" class="com.mtrunner.client.utils.TimedWorker"></bean>
+    
+    
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/common.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+    
+    
+    <bean id="SettingsManagerBean"  class="com.mtrunner.client.managers.SettingsManager" factory-method="getInstance" lazy-init="false" scope="singleton">
+	        <property name="happyTraderUrl" value="${common.happyTraderUrl}" />
+                <property name="happyTraderUser" value="${common.happyTraderUser}" />
+                <property name="happyTraderPassword" value="${common.happyTraderPassword}" />
+                <property name="HappyTraderBridgeLog" value="${common.HappyTraderBridgeLog}" />
+                <property name="ForwardIp" value="${common.ForwardIp}" />
+                <property name="HistoryPositionPageSize" value="${common.historyPositionsPageSize}" />
+                <property name="baseDir" value="${common.baseWorkPath}" />
+    </bean>
+    
+   
+
+</beans>

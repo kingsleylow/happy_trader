@@ -1,0 +1,10 @@
+-----------------------------HOFSTADTER
+Content-Disposition: form-data; name="key1"
+
+foobar
+-----------------------------HOFSTADTER
+Content-Disposition: form-data; name="filename1.txt"; filename="filename1.txt"
+Content-Type: application/octet-stream
+
+data to send
+-----------------------------HOFSTADTER--

@@ -1,0 +1,18 @@
+Reason:
+socket closed
+Error type: SocketException
+
+Stacktrace: 
+
+SocketInputStream.java#-2 - "java.net.SocketInputStream@socketRead0" native
+SocketInputStream.java#152 - "java.net.SocketInputStream@read" non-native
+SocketInputStream.java#122 - "java.net.SocketInputStream@read" non-native
+DataInputStream.java#195 - "java.io.DataInputStream@readFully" non-native
+DataInputStream.java#169 - "java.io.DataInputStream@readFully" non-native
+HtInquotePacket.java#77 - "com.fin.httrader.utils.transport.HtInquotePacket@read" non-native
+RtTradingServer.java#254 - "com.fin.httrader.managers.RtTradingServer$HtEventReceivingThread@doRun" non-native
+RtTradingServerBaseThread.java#151 - "com.fin.httrader.managers.RtTradingServerBaseThread@run" non-native
+
+Type:
+4
+----------------------

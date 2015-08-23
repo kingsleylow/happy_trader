@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/clientrepo2.iml" filepath="$PROJECT_DIR$/clientrepo2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export.iml" filepath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export-convert/highcharts-export-convert.iml" filepath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export-convert/highcharts-export-convert.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export-web/highcharts-export-web.iml" filepath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resources/lib/highcharts-4.0.4/exporting-server/java/highcharts-export/highcharts-export-web/highcharts-export-web.iml" />
+    </modules>
+  </component>
+</project>
