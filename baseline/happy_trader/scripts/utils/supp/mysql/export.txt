@@ -1,3 +1,0 @@
-c:\work\mysql\mysql_server_5_1\bin>mysqldump htrader --lock-tables --extended-in
-sert --skip-add-drop-table --quick --user=root --password=admin > htrader_dump.s
-ql

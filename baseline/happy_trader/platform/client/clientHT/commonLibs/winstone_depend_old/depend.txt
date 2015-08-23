@@ -1,2 +1,0 @@
-jasper-compiler.jar, jasper-runtime.jar, ant.jar, jsp-api.jar - Not supplied with Winstone. You can get this from the standard Tomcat binary download location. Just download the latest Tomcat, and copy these three files into the lib folder for Winstone. They will be in the tomcat_home/common/lib folder. 
-commons-logging-api.jar, commons-el.jar (Jasper 2 only) - These are required if you are using Jasper 2.0. You can get them from the tomcat binary distribution or separately from the link below. 

@@ -1,3 +1,0 @@
-1,http://www.google.com,Google
-2,http://www.rambler.ru,Rambler
-3,http://www.forex.kbpauk.ru,Pauk
