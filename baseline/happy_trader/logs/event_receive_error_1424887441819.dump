@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="windows-1251"?><ent name="event_packet"><xmlpar name="commonxml"><ent name="mt4_heartbeat"><par name="data" type="8"><val>{
-	"TYPE" : "HEARTBEAT"
-}</val></par></ent></xmlpar><par name="dtype" type="1"><val>7</val></par><par name="etime" type="4"><val>1424887439189.</val></par><par name="etype" type="1"><val>15</val></par><par name="puid" type="16"><val>00000000000000000000000000000000</val></par><par name="source" type="8"><val></val></par><par name="uid" type="16"><val>ABF89B54BD1811E4800008002700F07D</val></par></ent>
