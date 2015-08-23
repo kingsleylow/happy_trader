@@ -36,11 +36,13 @@
 *.dump
 bin/
 install/
+logs/
 
 
 # return that back
-!/baseline/happy_trader/**/*.exe
+!/baseline/happy_trader/to_change/**/*.exe
 !/baseline/happy_trader/extern/**/*.exe
+!/baseline/happy_trader/scripts/**/*.exe
 
 #
 recommit_ignored.cmd
