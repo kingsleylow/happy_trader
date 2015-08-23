@@ -26,6 +26,7 @@
 **.lib
 **.manifest
 **.opensdf
+**.dump
 !to_change/unzip.exe
 !to_change/zip.exe
 
