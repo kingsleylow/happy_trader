@@ -37,11 +37,11 @@
 bin/
 install/
 
-# return that back
-#!to_change/
-#!extern/
-
 
 # return that back
-!/to_change/**/*.exe
-!/extern/**/*.exe
+!/baseline/happy_trader/**/*.exe
+!/baseline/happy_trader/extern/**/*.exe
+
+#
+recommit_ignored.cmd
+
