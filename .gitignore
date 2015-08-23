@@ -38,6 +38,10 @@ bin/
 install/
 
 # return that back
-!to_change/
-!extern/
+#!to_change/
+#!extern/
 
+
+# return that back
+!/to_change/**/*.exe
+!/extern/**/*.exe
